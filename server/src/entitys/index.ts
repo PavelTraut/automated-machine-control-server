@@ -1,7 +1,4 @@
 import Log from './log.entity';
+import User from './user.entity';
 
-export default {
-  Log,
-};
-
-export const entities = [Log];
+export default [Log, User];

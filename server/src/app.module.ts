@@ -1,9 +1,11 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { entities } from './entitys';
 import LogsMiddleware from './logs/logs.middleware';
 import { LogsModule } from './logs/logs.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import entitys from './entitys';
 
 @Module({
   imports: [
@@ -18,11 +20,13 @@ import { LogsModule } from './logs/logs.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         synchronize: true,
-        entities: [...entities],
+        entities: [...entitys],
       }),
       inject: [ConfigService],
     }),
     LogsModule,
+    AuthModule,
+    UsersModule,
   ],
 })
 export class AppModule {

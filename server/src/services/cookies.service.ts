@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import getRefreshTime from '../utils/getRefreshTimes';
 
 export default class CookiesService {
@@ -7,5 +7,9 @@ export default class CookiesService {
       expires: getRefreshTime(),
       httpOnly: true,
     });
+  }
+
+  getRefreshToken(req: Request) {
+    return req.cookies('refreshToken');
   }
 }
