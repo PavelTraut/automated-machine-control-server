@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import entitys from './entitys';
 import { AuthMiddleware } from './auth/auth.middleware';
+import { MachinesModule } from './machines/machines.module';
+import { DefectsModule } from './defects/defects.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { AuthMiddleware } from './auth/auth.middleware';
     LogsModule,
     AuthModule,
     UsersModule,
+    MachinesModule,
+    DefectsModule,
   ],
 })
 export class AppModule {
