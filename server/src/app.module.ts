@@ -6,6 +6,7 @@ import { LogsModule } from './logs/logs.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import entitys from './entitys';
+import { AuthMiddleware } from './auth/auth.middleware';
 
 @Module({
   imports: [
@@ -31,6 +32,6 @@ import entitys from './entitys';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LogsMiddleware).forRoutes('*');
+    consumer.apply(LogsMiddleware, AuthMiddleware).forRoutes('*');
   }
 }
