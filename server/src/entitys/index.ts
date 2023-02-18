@@ -1,4 +1,6 @@
 import Log from './log.entity';
 import User from './user.entity';
+import Machine from './machine.entity';
+import Defect from './defect.entity';
 
-export default [Log, User];
+export default [Log, User, Machine, Defect];
