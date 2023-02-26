@@ -5,6 +5,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
 import Defect from './defect.entity';
 
@@ -28,7 +29,7 @@ class Machine {
   @UpdateDateColumn()
   updateAt: Date;
 
-  @OneToMany(() => Defect, (defect) => defect.machine)
+  @ManyToMany(() => Defect)
   defects: Defect[];
 }
 
