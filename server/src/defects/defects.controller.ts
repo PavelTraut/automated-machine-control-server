@@ -16,7 +16,7 @@ import Roles from '../decorators/roles.decorator';
 
 @Controller('defects')
 @UseGuards(RolesGuard)
-@Roles('admin')
+@Roles('all')
 export class DefectsController {
   constructor(private readonly defectsService: DefectsService) {}
 

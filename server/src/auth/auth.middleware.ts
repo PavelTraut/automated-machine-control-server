@@ -1,9 +1,9 @@
 import { NextFunction } from 'express';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
-import JwtService from '../services/jwt.service';
 import AppRequest from '../types/AppRequest';
 import { UsersService } from '../users/users.service';
+import { JwtService } from '../jwt/jwt.service';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {

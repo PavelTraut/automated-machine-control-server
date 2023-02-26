@@ -4,6 +4,6 @@ export default class UpdateDepartamentDto {
   @IsString()
   name: string;
 
-  @IsUUID()
+  @IsString()
   id: string;
 }

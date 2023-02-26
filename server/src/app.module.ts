@@ -10,6 +10,9 @@ import { AuthMiddleware } from './auth/auth.middleware';
 import { MachinesModule } from './machines/machines.module';
 import { DefectsModule } from './defects/defects.module';
 import { DepartamentsModule } from './departaments/departaments.module';
+import { CookiesModule } from './cookies/cookies.module';
+import { CryptoModule } from './crypto/crypto.module';
+import { JwtModule } from './jwt/jwt.module';
 
 @Module({
   imports: [
@@ -34,7 +37,11 @@ import { DepartamentsModule } from './departaments/departaments.module';
     MachinesModule,
     DefectsModule,
     DepartamentsModule,
+    CookiesModule,
+    CryptoModule,
+    JwtModule,
   ],
+  providers: [AuthMiddleware],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

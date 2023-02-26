@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { compare, hash } from 'bcryptjs';
+import { hash, compare } from 'bcryptjs';
 
 @Injectable()
-export default class CryptoService {
+export class CryptoService {
   private readonly saltRaunds = 10;
   compare(hash: string, password: string) {
     return compare(password, hash);

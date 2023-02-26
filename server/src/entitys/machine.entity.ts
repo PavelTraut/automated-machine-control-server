@@ -11,7 +11,7 @@ import Defect from './defect.entity';
 
 @Entity({ name: 'machines' })
 class Machine {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   public id: string;
 
   @Column()

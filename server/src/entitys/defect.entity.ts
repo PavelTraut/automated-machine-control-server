@@ -9,7 +9,7 @@ import Machine from './machine.entity';
 
 @Entity({ name: 'defects' })
 class Defect {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   public id: string;
 
   @Column()

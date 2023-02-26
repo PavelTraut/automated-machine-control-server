@@ -7,6 +7,6 @@ export default class AddDefectDto {
   @IsString()
   description: string;
 
-  @IsUUID()
+  @IsString()
   machineId: string;
 }

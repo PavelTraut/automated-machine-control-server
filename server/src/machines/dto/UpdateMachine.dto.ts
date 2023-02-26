@@ -1,7 +1,7 @@
 import { IsString, IsUUID } from 'class-validator';
 
 export default class UpdateMachineDto {
-  @IsUUID()
+  @IsString()
   id: string;
 
   @IsString()

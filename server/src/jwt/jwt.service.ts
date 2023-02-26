@@ -1,11 +1,13 @@
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { sign, verify } from 'jsonwebtoken';
 import User from '../entitys/user.entity';
-import JwtUser from '../types/JwtUser';
+import { sign, verify } from 'jsonwebtoken';
 import getAccessTime from '../utils/getAccessTimes';
 import getRefreshTime from '../utils/getRefreshTimes';
+import JwtUser from '../types/JwtUser';
 
-export default class JwtService {
+@Injectable()
+export class JwtService {
   constructor(private readonly configService: ConfigService) {}
 
   generateAccessToken({ id, role }: User) {

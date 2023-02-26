@@ -2,7 +2,7 @@ import Role, { BranchOperatorRoles } from '../../types/Role';
 import { IsEnum, IsString, IsUUID, MinLength } from 'class-validator';
 
 export default class UpdateUserDto {
-  @IsUUID()
+  @IsString()
   id: string;
 
   @IsEnum(BranchOperatorRoles)
