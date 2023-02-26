@@ -9,6 +9,7 @@ import entitys from './entitys';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { MachinesModule } from './machines/machines.module';
 import { DefectsModule } from './defects/defects.module';
+import { DepartamentsModule } from './departaments/departaments.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { DefectsModule } from './defects/defects.module';
     UsersModule,
     MachinesModule,
     DefectsModule,
+    DepartamentsModule,
   ],
 })
 export class AppModule {

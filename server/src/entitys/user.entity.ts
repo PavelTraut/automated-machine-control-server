@@ -4,10 +4,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { hash } from 'bcryptjs';
 import Role from '../types/Role';
+import Departament from './departament.entity';
 
 @Entity({ name: 'users' })
 class User {
@@ -25,6 +27,10 @@ class User {
 
   @CreateDateColumn()
   createdDate: Date;
+
+  @ManyToOne(() => Departament, (departament) => departament.workers)
+  departament: Departament;
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {
