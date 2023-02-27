@@ -16,7 +16,6 @@ import UpdateUserDto from './dto/UpdateUser.dto';
 
 @Controller('users')
 @UseGuards(RolesGuard)
-@Roles('admin')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Post()

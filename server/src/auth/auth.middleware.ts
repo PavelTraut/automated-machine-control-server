@@ -15,11 +15,12 @@ export class AuthMiddleware implements NestMiddleware {
 
   async use(req: AppRequest, res: Response, next: NextFunction) {
     const token = req.headers['authorization']?.split(' ')[1];
+    
     if (token) {
       try {
         const jwtUser = this.jwtServise.verifyAccessToken(token);
-
         const realUser = await this.usersService.getById(jwtUser.id);
+
         req.user = realUser;
       } catch {}
     }

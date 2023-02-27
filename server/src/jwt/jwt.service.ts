@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import User from '../entitys/user.entity';
 import { sign, verify } from 'jsonwebtoken';
-import getAccessTime from '../utils/getAccessTimes';
-import getRefreshTime from '../utils/getRefreshTimes';
 import JwtUser from '../types/JwtUser';
 
 @Injectable()
@@ -12,13 +10,13 @@ export class JwtService {
 
   generateAccessToken({ id, role }: User) {
     return sign({ id, role }, this.getAccessSecret(), {
-      expiresIn: getAccessTime().toString(),
+      expiresIn: '24h',
     });
   }
 
   generateRefreshToken({ role, id }: User) {
     return sign({ id, role }, this.getRefreshSecret(), {
-      expiresIn: getRefreshTime().toString(),
+      expiresIn: '30d',
     });
   }
 

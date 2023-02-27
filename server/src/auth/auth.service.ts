@@ -30,23 +30,18 @@ export class AuthService {
     return user;
   }
 
-  getAuthorize(user: User, res: Response): AuthResponseDto {
+  getAuthorize(user: User): AuthResponseDto {
     const accessToken = this.jwtService.generateAccessToken(user);
-    const refreshToken = this.jwtService.generateAccessToken(user);
-
-    this.cookiesService.setRefreshToken(res, refreshToken);
 
     return {
       user,
       accessToken,
-    };
+    }
   }
 
-  loginByRefreshToken(req: Request) {
-    const token = this.cookiesService.getRefreshToken(req);
-
-    return this.jwtService.verifyRefreshToken(token) as User;
-  }
+  // loginByRefreshToken(token:string) {
+    // return this.jwtService.verifyRefreshToken(token) as User;
+  // }
 
   private throwUnauthorizedException() {
     throw new UnauthorizedException(

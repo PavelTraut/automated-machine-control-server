@@ -8,7 +8,13 @@ async function bootstrap() {
     bufferLogs: true,
   });
   app.useLogger(app.get(CustomLogger));
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  })
   app.use(cookieParser());
+
 
   await app.listen(3000);
 }
