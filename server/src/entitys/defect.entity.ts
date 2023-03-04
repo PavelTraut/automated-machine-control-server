@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from 'typeorm';
 import Machine from './machine.entity';
 
@@ -26,6 +27,9 @@ class Defect {
 
   @UpdateDateColumn()
   updateAt: Date;
+
+  @ManyToOne(()=>Machine,(machine)=>machine.defects)
+  machine:Machine
 }
 
 export default Defect;

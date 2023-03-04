@@ -40,7 +40,7 @@ export class DepartamentsController {
   @Put()
   @Roles('admin')
   update(@Body() updateDepartamentDto: UpdateDepartamentDto) {
-    return this.update(updateDepartamentDto);
+    return this.departamentsService.update(updateDepartamentDto);
   }
 
   @Delete(':id')

@@ -11,4 +11,6 @@ export default class AddUserDto {
 
   @IsString()
   login: string;
+
+  departamentId:string
 }

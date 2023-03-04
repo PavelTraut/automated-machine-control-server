@@ -15,12 +15,12 @@ export class DepartamentsService {
   getDepartmentById(id: string) {
     return this.departamentsRepo.findOne({
       where: { id },
-      relations: ['workers'],
+      relations: ['workers','machines'],
     });
   }
 
   getAll() {
-    return this.departamentsRepo.find({ relations: ['users'] });
+    return this.departamentsRepo.find({ relations: ['workers','machines'] });
   }
 
   add(addDepartamentDto: AddDepartamentDto) {
@@ -30,8 +30,7 @@ export class DepartamentsService {
   }
 
   update(updateDepartamentDto: UpdateDepartamentDto) {
-    return this.departamentsRepo.update(
-      updateDepartamentDto.id,
+    return this.departamentsRepo.save(
       updateDepartamentDto,
     );
   }

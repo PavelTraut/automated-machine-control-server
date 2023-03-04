@@ -12,21 +12,27 @@ export class UsersService {
   ) {}
 
   add(addUserDto: AddUserDto) {
-    const user = this.usersRepo.create(addUserDto);
+    const user = this.usersRepo.create({
+      ...addUserDto,
+      departament: { id: addUserDto.departamentId },
+    });
 
     return this.usersRepo.save(user);
   }
 
   getAll() {
-    return this.usersRepo.find();
+    return this.usersRepo.find({relations:['departament']});
   }
 
   getById(id: string) {
-    return this.usersRepo.findOneBy({ id });
+    return this.usersRepo.findOne({ where:{id},relations:['departament'] });
   }
 
   findByLogin(login: string) {
-    return this.usersRepo.findOneBy({ login });
+    return this.usersRepo.findOne({
+      where: { login },
+      relations: ['departament'],
+    });
   }
 
   update(updateUserDto: UpdateUserDto) {

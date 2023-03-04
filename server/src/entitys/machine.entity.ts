@@ -6,8 +6,10 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToMany,
+  ManyToOne,
 } from 'typeorm';
 import Defect from './defect.entity';
+import Departament from './departament.entity';
 
 @Entity({ name: 'machines' })
 class Machine {
@@ -20,7 +22,7 @@ class Machine {
   @Column({ default: true })
   description: string;
 
-  @Column()
+  @Column({default:false})
   isActive: boolean;
 
   @CreateDateColumn()
@@ -29,7 +31,10 @@ class Machine {
   @UpdateDateColumn()
   updateAt: Date;
 
-  @ManyToMany(() => Defect)
+  @ManyToOne(()=>Departament,(departament)=>departament.machines)
+  departament:Departament
+
+  @OneToMany(() => Defect,(defect)=>defect.machine)
   defects: Defect[];
 }
 
