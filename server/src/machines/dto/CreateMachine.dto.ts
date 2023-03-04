@@ -6,4 +6,6 @@ export default class CreateMachineDto {
 
   @IsString()
   description: string;
+
+  departamentId:string
 }

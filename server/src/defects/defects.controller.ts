@@ -13,6 +13,8 @@ import AddDefectDto from './dto/AddDefect.dto';
 import UpdateDefectDto from './dto/UpdateDefect.dto';
 import { RolesGuard } from '../guards/role.guard';
 import Roles from '../decorators/roles.decorator';
+import GetUser from '../decorators/get-user.decorator';
+import User from '../entitys/user.entity';
 
 @Controller('defects')
 @UseGuards(RolesGuard)
@@ -21,7 +23,10 @@ export class DefectsController {
   constructor(private readonly defectsService: DefectsService) {}
 
   @Get()
-  getAll() {
+  getAll(@GetUser() user: User) {
+    if (user.role === 'user') {
+      return this.defectsService.getByUser(user);
+    }
     return this.defectsService.getAll();
   }
 

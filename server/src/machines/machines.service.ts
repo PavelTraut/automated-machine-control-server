@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import Machine from '../entitys/machine.entity';
 import CreateMachineDto from './dto/CreateMachine.dto';
 import UpdateMachineDto from './dto/UpdateMachine.dto';
+import User from '../entitys/user.entity';
 
 @Injectable()
 export class MachinesService {
@@ -13,24 +14,33 @@ export class MachinesService {
   ) {}
 
   add(addMachineDto: CreateMachineDto) {
-    const machine = this.machinesRepository.create(addMachineDto);
+    const machine = this.machinesRepository.create({
+      ...addMachineDto,
+      departament: { id: addMachineDto.departamentId },
+    });
 
     return this.machinesRepository.save(machine);
   }
 
   getAll() {
-    return this.machinesRepository.find();
+    return this.machinesRepository.find({ relations: ['departament'] });
+  }
+
+  getByUser(user: User) {
+    return this.machinesRepository.find({
+      where: { departament: { id: user.departament.id } },
+      relations: ['departament'],
+    });
   }
 
   getById(id: string) {
     return this.machinesRepository.findOneBy({ id });
   }
 
-  update(updateMachineDto: UpdateMachineDto) {
-    return this.machinesRepository.update(
-      updateMachineDto.id,
-      updateMachineDto,
-    );
+  async update(updateMachineDto: UpdateMachineDto) {
+    await this.machinesRepository.save(updateMachineDto);
+
+    return updateMachineDto;
   }
 
   delete(id: string) {

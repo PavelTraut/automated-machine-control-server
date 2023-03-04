@@ -4,6 +4,7 @@ import Defect from '../entitys/defect.entity';
 import { Repository } from 'typeorm';
 import AddDefectDto from './dto/AddDefect.dto';
 import UpdateDefectDto from './dto/UpdateDefect.dto';
+import User from '../entitys/user.entity';
 
 @Injectable()
 export class DefectsService {
@@ -19,6 +20,13 @@ export class DefectsService {
 
   getAll() {
     return this.defectsRepo.find();
+  }
+
+  getByUser(user: User) {
+    return this.defectsRepo.find({
+      where: { machine: { departament: { id: user.departament.id } } },
+      relations: ['machine'],
+    });
   }
 
   getById(id: string) {

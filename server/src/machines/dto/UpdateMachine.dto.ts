@@ -1,4 +1,4 @@
-import { IsString, IsUUID } from 'class-validator';
+import { IsString, IsUUID, IsBoolean } from 'class-validator';
 
 export default class UpdateMachineDto {
   @IsString()
@@ -9,4 +9,6 @@ export default class UpdateMachineDto {
 
   @IsString()
   description: string;
+
+  isActive: boolean;
 }
