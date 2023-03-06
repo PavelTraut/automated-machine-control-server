@@ -13,7 +13,11 @@ export class DefectsService {
   ) {}
 
   add(addDefectDto: AddDefectDto) {
-    const defect = this.defectsRepo.create(addDefectDto);
+    console.log(addDefectDto);
+    const defect = this.defectsRepo.create({
+      ...addDefectDto,
+      machine: { id: addDefectDto.machineId },
+    });
 
     return this.defectsRepo.save(defect);
   }
