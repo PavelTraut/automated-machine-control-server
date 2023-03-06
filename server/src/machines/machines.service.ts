@@ -29,7 +29,7 @@ export class MachinesService {
   getByUser(user: User) {
     return this.machinesRepository.find({
       where: { departament: { id: user.departament.id } },
-      relations: ['departament'],
+      relations: ['departament','defects'],
     });
   }
 
