@@ -21,11 +21,14 @@ export class UsersService {
   }
 
   getAll() {
-    return this.usersRepo.find({relations:['departament']});
+    return this.usersRepo.find({ relations: ['departament'] });
   }
 
   getById(id: string) {
-    return this.usersRepo.findOne({ where:{id},relations:['departament'] });
+    return this.usersRepo.findOne({
+      where: { id },
+      relations: ['departament'],
+    });
   }
 
   findByLogin(login: string) {
