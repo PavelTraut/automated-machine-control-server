@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import Machine from './machine.entity';
 import User from './user.entity';
 
-@Entity({ name: 'defects' })
+@Entity({ name: 'departaments' })
 class Departament {
   @PrimaryGeneratedColumn()
   id: string;
