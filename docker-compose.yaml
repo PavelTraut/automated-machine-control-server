@@ -1,0 +1,38 @@
+version: '3'
+services: 
+  db:
+    image: postgres
+    restart: always
+    environment: 
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - PGDATA= /pg-data
+    container_name: postgres-db-automated-machine-control
+    volumes:
+      - pg-data:/pg-data
+  nestjs:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    image: automated-machine-control-server
+    environment: 
+      - DB_HOST=${DB_HOST}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_SYNC=false
+      - JWT_KEY=${JWT_KEY}
+      - POSTGRES_PORT=${DB_HOST}
+      - APP_PORT=${APP_PORT}
+    ports: 
+      - "4200:3000" 
+    container_name: automated-machine-control-server
+    depends_on: 
+      - db
+    volumes: 
+      - .:/app
+      - /app/node_modules
+volumes:
+  pg-data:
+  pgadmin-data:
