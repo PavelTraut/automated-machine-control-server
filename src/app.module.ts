@@ -13,6 +13,7 @@ import { DepartamentsModule } from './departaments/departaments.module';
 import { CookiesModule } from './cookies/cookies.module';
 import { CryptoModule } from './crypto/crypto.module';
 import { JwtModule } from './jwt/jwt.module';
+import { ConsumablesModule } from './consumables/consumables.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { JwtModule } from './jwt/jwt.module';
     CookiesModule,
     CryptoModule,
     JwtModule,
+    ConsumablesModule,
   ],
   providers: [AuthMiddleware],
 })
