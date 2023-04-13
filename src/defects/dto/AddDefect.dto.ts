@@ -1,4 +1,4 @@
-import { IsString, IsUUID } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export default class AddDefectDto {
   @IsString()
@@ -9,4 +9,11 @@ export default class AddDefectDto {
 
   @IsString()
   machineId: string;
+
+  @IsString()
+  consumable: string;
+
+  responsibleId: string;
+
+  decisionDate: Date;
 }

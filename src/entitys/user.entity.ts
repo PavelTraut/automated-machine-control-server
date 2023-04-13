@@ -5,11 +5,13 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { hash } from 'bcryptjs';
 import Role from '../types/Role';
 import Departament from './departament.entity';
+import Defect from './defect.entity';
 
 @Entity({ name: 'users' })
 class User {
@@ -30,6 +32,9 @@ class User {
 
   @ManyToOne(() => Departament, (departament) => departament.workers)
   departament: Departament;
+
+  @OneToMany(() => Defect, (defect) => defect.responsible)
+  responsibleDefects: Defect[];
 
   @BeforeInsert()
   @BeforeUpdate()

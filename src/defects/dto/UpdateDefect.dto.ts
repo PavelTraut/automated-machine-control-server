@@ -10,4 +10,11 @@ export default class UpdateDefectDto {
 
   @IsString()
   description: string;
+
+  @IsString()
+  consumable: string;
+
+  responsibleId: string;
+
+  decisionDate: Date;
 }

@@ -5,8 +5,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToOne,
 } from 'typeorm';
 import Machine from './machine.entity';
+import Consumable from './consumable.entity';
+import User from './user.entity';
 
 @Entity({ name: 'defects' })
 class Defect {
@@ -22,14 +25,23 @@ class Defect {
   @Column({ default: false })
   isResolved: boolean;
 
+  @Column({ nullable: true })
+  decisionDate: Date;
+
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updateAt: Date;
 
-  @ManyToOne(()=>Machine,(machine)=>machine.defects)
-  machine:Machine
+  @OneToOne(() => Consumable, (consumable) => consumable.defect)
+  consumable: Consumable;
+
+  @ManyToOne(() => User, (user) => user.responsibleDefects)
+  responsible: User;
+
+  @ManyToOne(() => Machine, (machine) => machine.defects)
+  machine: Machine;
 }
 
 export default Defect;

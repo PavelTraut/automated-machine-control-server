@@ -5,17 +5,24 @@ import { Repository } from 'typeorm';
 import AddDefectDto from './dto/AddDefect.dto';
 import UpdateDefectDto from './dto/UpdateDefect.dto';
 import User from '../entitys/user.entity';
+import { ConsumablesService } from '../consumables/consumables.service';
 
 @Injectable()
 export class DefectsService {
   constructor(
     @InjectRepository(Defect) private readonly defectsRepo: Repository<Defect>,
+    private readonly consumablesService: ConsumablesService,
   ) {}
 
-  add(addDefectDto: AddDefectDto) {
-    console.log(addDefectDto);
+  async add(addDefectDto: AddDefectDto) {
+    const consumable = await this.consumablesService.createOrFind(
+      addDefectDto.consumable,
+    );
+
     const defect = this.defectsRepo.create({
       ...addDefectDto,
+      consumable,
+      responsible: { id: addDefectDto.responsibleId },
       machine: { id: addDefectDto.machineId },
     });
 
@@ -37,8 +44,16 @@ export class DefectsService {
     return this.defectsRepo.findOneBy({ id });
   }
 
-  update(updateDefectDto: UpdateDefectDto) {
-    return this.defectsRepo.update(updateDefectDto.id, updateDefectDto);
+  async update(updateDefectDto: UpdateDefectDto) {
+    const consumable = await this.consumablesService.createOrFind(
+      updateDefectDto.name,
+    );
+
+    return this.defectsRepo.update(updateDefectDto.id, {
+      ...updateDefectDto,
+      responsible: { id: updateDefectDto.responsibleId },
+      consumable,
+    });
   }
 
   delete(id: string) {
