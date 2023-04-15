@@ -7,6 +7,7 @@ import {
   Post,
   UseGuards,
   Put,
+  Query,
 } from '@nestjs/common';
 import { RolesGuard } from '../guards/role.guard';
 import Roles from '../decorators/roles.decorator';
@@ -27,9 +28,12 @@ export class MachinesController {
   }
   @Roles('all')
   @Get()
-  getAll(@GetUser() user: User) {
+  getAll(@GetUser() user: User, @Query('departament') departament: string) {
     if (user.role === 'user') {
       return this.machinesService.getByUser(user);
+    }
+    if (departament) {
+      return this.machinesService.getByDepartament(departament);
     }
     return this.machinesService.getAll();
   }

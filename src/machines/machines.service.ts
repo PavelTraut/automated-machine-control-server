@@ -26,10 +26,17 @@ export class MachinesService {
     return this.machinesRepository.find({ relations: ['departament'] });
   }
 
+  getByDepartament(departament: string) {
+    return this.machinesRepository.find({
+      where: { departament: { id: departament } },
+      relations: ['departament'],
+    });
+  }
+
   getByUser(user: User) {
     return this.machinesRepository.find({
       where: { departament: { id: user.departament.id } },
-      relations: ['departament','defects'],
+      relations: ['departament', 'defects'],
     });
   }
 
