@@ -22,7 +22,7 @@ class Machine {
   @Column({ default: true })
   description: string;
 
-  @Column({default:false})
+  @Column({ default: true })
   isActive: boolean;
 
   @CreateDateColumn()
@@ -31,10 +31,10 @@ class Machine {
   @UpdateDateColumn()
   updateAt: Date;
 
-  @ManyToOne(()=>Departament,(departament)=>departament.machines)
-  departament:Departament
+  @ManyToOne(() => Departament, (departament) => departament.machines)
+  departament: Departament;
 
-  @OneToMany(() => Defect,(defect)=>defect.machine)
+  @OneToMany(() => Defect, (defect) => defect.machine)
   defects: Defect[];
 }
 
