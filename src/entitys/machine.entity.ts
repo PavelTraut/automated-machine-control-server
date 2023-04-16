@@ -31,7 +31,9 @@ class Machine {
   @UpdateDateColumn()
   updateAt: Date;
 
-  @ManyToOne(() => Departament, (departament) => departament.machines)
+  @ManyToOne(() => Departament, (departament) => departament.machines, {
+    onDelete: 'CASCADE',
+  })
   departament: Departament;
 
   @OneToMany(() => Defect, (defect) => defect.machine)

@@ -12,7 +12,9 @@ class Departament {
   @OneToMany(() => User, (user) => user.departament)
   workers: User[];
 
-  @OneToMany(() => Machine, (machine) => machine.departament)
+  @OneToMany(() => Machine, (machine) => machine.departament, {
+    onDelete: 'CASCADE',
+  })
   machines: Machine[];
 }
 
