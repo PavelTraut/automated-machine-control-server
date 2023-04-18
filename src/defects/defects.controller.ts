@@ -23,9 +23,12 @@ export class DefectsController {
   constructor(private readonly defectsService: DefectsService) {}
 
   @Get()
-  getAll(@GetUser() user: User) {
+  getAll(@GetUser() user: User, @Param('machine') machineId: string) {
     if (user.role === 'user') {
       return this.defectsService.getByUser(user);
+    }
+    if (machineId) {
+      return this.defectsService.getByMachine(machineId);
     }
     return this.defectsService.getAll();
   }

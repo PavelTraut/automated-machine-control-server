@@ -18,7 +18,6 @@ export class DefectsService {
     const consumable = await this.consumablesService.createOrFind(
       addDefectDto.consumable,
     );
-
     const defect = this.defectsRepo.create({
       ...addDefectDto,
       consumable,
@@ -26,11 +25,15 @@ export class DefectsService {
       machine: { id: addDefectDto.machineId },
     });
 
-    return this.defectsRepo.save(defect);
+    return this.defectsRepo.save({ ...defect });
   }
 
   getAll() {
     return this.defectsRepo.find();
+  }
+
+  getByMachine(id: string) {
+    return this.defectsRepo.find({ where: { machine: { id } } });
   }
 
   getByUser(user: User) {

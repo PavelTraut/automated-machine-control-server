@@ -17,4 +17,5 @@ export default class UpdateDefectDto {
   responsibleId: string;
 
   decisionDate: Date;
+  type: string;
 }
