@@ -27,6 +27,9 @@ class User {
   @Column()
   role: Role;
 
+  @Column({ default: true })
+  isActive: boolean;
+
   @CreateDateColumn()
   createdDate: Date;
 
