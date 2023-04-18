@@ -26,6 +26,9 @@ class Defect {
   isResolved: boolean;
 
   @Column({ nullable: true })
+  type: string;
+
+  @Column({ nullable: true })
   decisionDate: Date;
 
   @CreateDateColumn()
@@ -34,7 +37,7 @@ class Defect {
   @UpdateDateColumn()
   updateAt: Date;
 
-  @OneToOne(() => Consumable, (consumable) => consumable.defect)
+  @ManyToOne(() => Consumable, (consumable) => consumable.defects)
   consumable: Consumable;
 
   @ManyToOne(() => User, (user) => user.responsibleDefects)

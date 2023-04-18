@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  OneToMany,
+} from 'typeorm';
 import Defect from './defect.entity';
 
 @Entity({ name: 'defects' })
@@ -9,8 +15,8 @@ class Consumable {
   @Column()
   name: string;
 
-  @OneToOne(() => Defect, (defect) => defect.consumable)
-  defect: Defect;
+  @OneToMany(() => Defect, (defect) => defect.consumable)
+  defects: Defect[];
 }
 
 export default Consumable;
