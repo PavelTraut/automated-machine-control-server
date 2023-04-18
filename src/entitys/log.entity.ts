@@ -7,7 +7,7 @@ import {
 
 @Entity({ name: 'logs' })
 class Log {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   public id: number;
 
   @Column({ nullable: true })

@@ -13,7 +13,7 @@ import Departament from './departament.entity';
 
 @Entity({ name: 'machines' })
 class Machine {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   public id: string;
 
   @Column()

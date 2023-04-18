@@ -4,7 +4,7 @@ import User from './user.entity';
 
 @Entity({ name: 'departaments' })
 class Departament {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column()
   name: string;

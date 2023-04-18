@@ -13,7 +13,7 @@ import User from './user.entity';
 
 @Entity({ name: 'defects' })
 class Defect {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   public id: string;
 
   @Column()

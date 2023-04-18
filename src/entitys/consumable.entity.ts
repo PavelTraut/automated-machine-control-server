@@ -7,9 +7,9 @@ import {
 } from 'typeorm';
 import Defect from './defect.entity';
 
-@Entity({ name: 'defects' })
+@Entity({ name: 'consumables' })
 class Consumable {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   public id: string;
 
   @Column()
