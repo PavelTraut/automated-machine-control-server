@@ -23,13 +23,19 @@ export class MachinesService {
   }
 
   getAll() {
-    return this.machinesRepository.find({ relations: ['departament'] });
+    return this.machinesRepository.find({
+      relations: ['departament', 'defects'],
+      order: {
+        isActive: { direction: 'asc' },
+        createdAt: { direction: 'desc' },
+      },
+    });
   }
 
   getByDepartament(departament: string) {
     return this.machinesRepository.find({
       where: { departament: { id: departament } },
-      relations: ['departament'],
+      relations: ['departament', 'defects'],
     });
   }
 
@@ -41,7 +47,10 @@ export class MachinesService {
   }
 
   getById(id: string) {
-    return this.machinesRepository.findOneBy({ id });
+    return this.machinesRepository.findOne({
+      where: { id },
+      relations: ['departament', 'defects'],
+    });
   }
 
   async update(updateMachineDto: UpdateMachineDto) {

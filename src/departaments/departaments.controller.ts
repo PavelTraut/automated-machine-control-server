@@ -20,7 +20,6 @@ export class DepartamentsController {
   constructor(private departamentsService: DepartamentsService) {}
 
   @Get()
-  @Roles('all')
   getAll() {
     return this.departamentsService.getAll();
   }
