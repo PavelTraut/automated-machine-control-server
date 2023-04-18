@@ -14,14 +14,19 @@ export class UsersService {
   add(addUserDto: AddUserDto) {
     const user = this.usersRepo.create({
       ...addUserDto,
-      departament: { id: addUserDto.departamentId },
+      departament: addUserDto.departamentId
+        ? { id: addUserDto.departamentId }
+        : null,
     });
 
     return this.usersRepo.save(user);
   }
 
   getAll() {
-    return this.usersRepo.find({ relations: ['departament'] });
+    return this.usersRepo.find({
+      relations: ['departament'],
+      where: { role: 'user', isActive: true },
+    });
   }
 
   getById(id: string) {
@@ -43,6 +48,6 @@ export class UsersService {
   }
 
   delete(id: string) {
-    return this.usersRepo.delete(id);
+    return this.usersRepo.update(id, { isActive: false });
   }
 }
