@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { DefectsService } from './defects.service';
@@ -23,12 +24,12 @@ export class DefectsController {
   constructor(private readonly defectsService: DefectsService) {}
 
   @Get()
-  getAll(@GetUser() user: User, @Param('machine') machineId: string) {
-    if (user.role === 'user') {
-      return this.defectsService.getByUser(user);
-    }
+  getAll(@GetUser() user: User, @Query('machine') machineId: string) {
     if (machineId) {
       return this.defectsService.getByMachine(machineId);
+    }
+    if (user.role === 'user') {
+      return this.defectsService.getByUser(user);
     }
     return this.defectsService.getAll();
   }

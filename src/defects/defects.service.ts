@@ -25,7 +25,7 @@ export class DefectsService {
       machine: { id: addDefectDto.machineId },
     });
 
-    return this.defectsRepo.save({ ...defect });
+    return this.defectsRepo.save(defect);
   }
 
   getAll() {
@@ -33,30 +33,35 @@ export class DefectsService {
   }
 
   getByMachine(id: string) {
-    return this.defectsRepo.find({ where: { machine: { id } } });
+    return this.defectsRepo.find({
+      where: { machine: { id } },
+      order: {
+        isResolved: { direction: 'ASC' },
+        decisionDate: { direction: 'DESC' },
+      },
+      relations: ['consumable', 'responsible'],
+    });
   }
 
   getByUser(user: User) {
     return this.defectsRepo.find({
       where: { machine: { departament: { id: user.departament.id } } },
-      relations: ['machine'],
+      relations: ['consumable', 'responsible'],
     });
   }
 
   getById(id: string) {
-    return this.defectsRepo.findOneBy({ id });
+    return this.defectsRepo.findOne({
+      where: { id },
+      relations: ['consumable', 'responsible'],
+    });
   }
 
   async update(updateDefectDto: UpdateDefectDto) {
-    const consumable = await this.consumablesService.createOrFind(
-      updateDefectDto.name,
-    );
-
-    return this.defectsRepo.update(updateDefectDto.id, {
+    await this.defectsRepo.update(updateDefectDto.id, {
       ...updateDefectDto,
-      responsible: { id: updateDefectDto.responsibleId },
-      consumable,
     });
+    return this.getById(updateDefectDto.id);
   }
 
   delete(id: string) {

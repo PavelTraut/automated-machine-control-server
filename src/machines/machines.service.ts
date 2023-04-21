@@ -26,8 +26,7 @@ export class MachinesService {
     return this.machinesRepository.find({
       relations: ['departament', 'defects'],
       order: {
-        isActive: { direction: 'asc' },
-        createdAt: { direction: 'desc' },
+        defects: { isResolved: { nulls: 'LAST', direction: 'desc' } },
       },
     });
   }
