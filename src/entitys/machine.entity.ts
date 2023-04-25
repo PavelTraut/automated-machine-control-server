@@ -5,7 +5,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
-  ManyToMany,
   ManyToOne,
 } from 'typeorm';
 import Defect from './defect.entity';
@@ -21,6 +20,15 @@ class Machine {
 
   @Column({ default: true })
   description: string;
+
+  @Column()
+  model: string;
+
+  @Column()
+  number: string;
+
+  @Column()
+  startYear: string;
 
   @Column({ default: true })
   isActive: boolean;

@@ -7,5 +7,11 @@ export default class CreateMachineDto {
   @IsString()
   description: string;
 
-  departamentId:string
+  departamentId: string;
+
+  model: string;
+
+  number: string;
+
+  startYear: string;
 }

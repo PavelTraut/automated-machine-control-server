@@ -11,4 +11,10 @@ export default class UpdateMachineDto {
   description: string;
 
   isActive: boolean;
+
+  model: string;
+
+  number: string;
+
+  startYear: string;
 }
