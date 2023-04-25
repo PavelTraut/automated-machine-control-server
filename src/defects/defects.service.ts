@@ -15,12 +15,9 @@ export class DefectsService {
   ) {}
 
   async add(addDefectDto: AddDefectDto) {
-    const consumable = await this.consumablesService.createOrFind(
-      addDefectDto.consumable,
-    );
     const defect = this.defectsRepo.create({
       ...addDefectDto,
-      consumable,
+      consumable: { id: addDefectDto.consumable },
       responsible: { id: addDefectDto.responsibleId },
       machine: { id: addDefectDto.machineId },
     });

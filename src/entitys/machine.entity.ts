@@ -21,13 +21,13 @@ class Machine {
   @Column({ default: true })
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   model: string;
 
-  @Column()
+  @Column({ nullable: true })
   number: string;
 
-  @Column()
+  @Column({ nullable: true })
   startYear: string;
 
   @Column({ default: true })
