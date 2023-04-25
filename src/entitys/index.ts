@@ -4,5 +4,14 @@ import Machine from './machine.entity';
 import Defect from './defect.entity';
 import Departament from './departament.entity';
 import Consumable from './consumable.entity';
+import ConsumableType from './consumable-type.entity';
 
-export default [Log, User, Machine, Defect, Departament, Consumable];
+export default [
+  Log,
+  User,
+  Machine,
+  Defect,
+  Departament,
+  Consumable,
+  ConsumableType,
+];
