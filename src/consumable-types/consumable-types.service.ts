@@ -23,8 +23,9 @@ export class ConsumableTypesService {
 
     return this.consumableTypesRepo.save(type);
   }
-  update(dto: UpdateConsumbleTypeDto) {
-    return this.consumableTypesRepo.update(dto.id, { name: dto.name });
+  async update(dto: UpdateConsumbleTypeDto) {
+    await this.consumableTypesRepo.update(dto.id, { name: dto.name });
+    return this.getById(dto.id);
   }
 
   getAll() {
