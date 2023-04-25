@@ -26,7 +26,8 @@ export class MachinesService {
     return this.machinesRepository.find({
       relations: ['departament', 'defects'],
       order: {
-        defects: { isResolved: { nulls: 'LAST', direction: 'desc' } },
+        defects: { isResolved: { direction: 'ASC' } },
+        createdAt: { direction: 'DESC' },
       },
     });
   }
@@ -35,6 +36,10 @@ export class MachinesService {
     return this.machinesRepository.find({
       where: { departament: { id: departament } },
       relations: ['departament', 'defects'],
+      order: {
+        defects: { isResolved: { direction: 'ASC' } },
+        createdAt: { direction: 'DESC' },
+      },
     });
   }
 
