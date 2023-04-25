@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import Machine from './machine.entity';
 import User from './user.entity';
 
@@ -16,6 +22,9 @@ class Departament {
     onDelete: 'CASCADE',
   })
   machines: Machine[];
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
 
 export default Departament;

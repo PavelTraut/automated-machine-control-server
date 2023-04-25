@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+} from 'typeorm';
 import Defect from './defect.entity';
 import Consumable from './consumable.entity';
 
@@ -12,6 +18,9 @@ class ConsumableType {
 
   @OneToMany(() => Defect, (consumable) => consumable.type)
   consumables: Consumable[];
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
 
 export default ConsumableType;

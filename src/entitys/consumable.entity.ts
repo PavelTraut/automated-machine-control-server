@@ -5,6 +5,7 @@ import {
   OneToOne,
   OneToMany,
   ManyToOne,
+  CreateDateColumn,
 } from 'typeorm';
 import Defect from './defect.entity';
 import ConsumableType from './consumable-type.entity';
@@ -22,6 +23,9 @@ class Consumable {
 
   @ManyToOne(() => ConsumableType, (type) => type.consumables)
   type: ConsumableType;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
 
 export default Consumable;
