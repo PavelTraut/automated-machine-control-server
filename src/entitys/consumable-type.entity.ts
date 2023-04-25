@@ -16,7 +16,7 @@ class ConsumableType {
   @Column()
   name: string;
 
-  @OneToMany(() => Defect, (consumable) => consumable.type)
+  @OneToMany(() => Consumable, (consumable) => consumable.type)
   consumables: Consumable[];
 
   @CreateDateColumn()
