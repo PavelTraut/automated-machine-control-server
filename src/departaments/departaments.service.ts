@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Departament from '../entitys/departament.entity';
@@ -15,24 +15,36 @@ export class DepartamentsService {
   getDepartmentById(id: string) {
     return this.departamentsRepo.findOne({
       where: { id },
-      relations: ['workers','machines'],
+      relations: ['workers', 'machines'],
     });
   }
 
   getAll() {
-    return this.departamentsRepo.find({ relations: ['workers','machines'] });
+    return this.departamentsRepo.find({ relations: ['workers', 'machines'] });
   }
 
-  add(addDepartamentDto: AddDepartamentDto) {
+  async add(addDepartamentDto: AddDepartamentDto) {
+    const existedDepartament = await this.departamentsRepo.findOneBy({
+      name: addDepartamentDto.name,
+    });
+    if (existedDepartament) {
+      throw new BadRequestException('Цех с таким названием уже сущестувует');
+    }
+
     const departament = this.departamentsRepo.create(addDepartamentDto);
 
     return this.departamentsRepo.save(departament);
   }
 
-  update(updateDepartamentDto: UpdateDepartamentDto) {
-    return this.departamentsRepo.save(
-      updateDepartamentDto,
-    );
+  async update(updateDepartamentDto: UpdateDepartamentDto) {
+    const existedDepartament = await this.departamentsRepo.findOneBy({
+      name: updateDepartamentDto.name,
+    });
+    if (existedDepartament) {
+      throw new BadRequestException('Цех с таким названием уже сущестувует');
+    }
+
+    return this.departamentsRepo.save(updateDepartamentDto);
   }
 
   delete(id: string) {
