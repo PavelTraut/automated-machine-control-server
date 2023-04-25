@@ -14,6 +14,7 @@ import { CookiesModule } from './cookies/cookies.module';
 import { CryptoModule } from './crypto/crypto.module';
 import { JwtModule } from './jwt/jwt.module';
 import { ConsumablesModule } from './consumables/consumables.module';
+import { ConsumableTypesModule } from './consumable-types/consumable-types.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { ConsumablesModule } from './consumables/consumables.module';
     CryptoModule,
     JwtModule,
     ConsumablesModule,
+    ConsumableTypesModule,
   ],
   providers: [AuthMiddleware],
 })
