@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ConsumablesService } from './consumables.service';
 import Roles from '../decorators/roles.decorator';
 import CreateConsumableDto from './dto/CreateConsumable.dto';
@@ -13,8 +13,18 @@ export class ConsumablesController {
     return this.consumablesService.getAll();
   }
 
+  @Get(':id')
+  getById(@Param('id') id: string) {
+    return this.consumablesService.getById(id);
+  }
+
   @Post()
   add(@Body() dto: CreateConsumableDto) {
     return this.consumablesService.add(dto);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.consumablesService.delete(id);
   }
 }
