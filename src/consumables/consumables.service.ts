@@ -35,6 +35,6 @@ export class ConsumablesService {
   }
 
   useConsumable(id: string) {
-    return this.consumablesRepo.update(id, { isUsed: true });
+    return this.consumablesRepo.update(id, { isAvailable: false });
   }
 }

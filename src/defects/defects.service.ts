@@ -22,7 +22,6 @@ export class DefectsService {
 
     await Promise.all(
       addDefectDto.consumables.map(async (c) => {
-        console.log(c);
         await this.consumablesService.useConsumable(c.id);
       }),
     );

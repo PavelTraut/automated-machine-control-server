@@ -18,8 +18,8 @@ class Consumable {
   @Column()
   name: string;
 
-  @Column({ default: false })
-  isUsed: boolean;
+  @Column({ default: true })
+  isAvailable: boolean;
 
   @ManyToOne(() => ConsumableType, (type) => type.consumables)
   type: ConsumableType;
