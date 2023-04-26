@@ -18,6 +18,9 @@ class Consumable {
   @Column()
   name: string;
 
+  @Column({ default: false })
+  isUsed: boolean;
+
   @OneToMany(() => Defect, (defect) => defect.consumable)
   defects: Defect[];
 

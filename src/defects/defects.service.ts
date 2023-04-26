@@ -22,6 +22,8 @@ export class DefectsService {
       machine: { id: addDefectDto.machineId },
     });
 
+    await this.consumablesService.useConsumable(addDefectDto.consumable);
+
     return this.defectsRepo.save(defect);
   }
 

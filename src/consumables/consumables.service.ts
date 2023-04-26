@@ -33,4 +33,8 @@ export class ConsumablesService {
   delete(id: string) {
     return this.consumablesRepo.delete(id);
   }
+
+  useConsumable(id: string) {
+    return this.consumablesRepo.update(id, { isUsed: true });
+  }
 }
