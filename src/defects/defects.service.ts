@@ -18,7 +18,6 @@ export class DefectsService {
     const defect = this.defectsRepo.create({
       ...addDefectDto,
       consumable: { id: addDefectDto.consumable },
-      responsible: { id: addDefectDto.responsibleId },
       machine: { id: addDefectDto.machineId },
     });
 

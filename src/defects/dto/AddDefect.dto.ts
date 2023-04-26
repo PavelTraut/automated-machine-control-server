@@ -1,4 +1,5 @@
 import { IsString, IsUUID } from 'class-validator';
+import User from '../../entitys/user.entity';
 
 export default class AddDefectDto {
   @IsString()
@@ -13,7 +14,7 @@ export default class AddDefectDto {
   @IsUUID()
   consumable: string;
 
-  responsibleId: string;
+  responsible: User[];
 
   decisionDate: Date;
 

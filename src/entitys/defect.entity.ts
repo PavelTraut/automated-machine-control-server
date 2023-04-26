@@ -5,7 +5,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToOne,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 import Machine from './machine.entity';
 import Consumable from './consumable.entity';
@@ -40,8 +41,9 @@ class Defect {
   @ManyToOne(() => Consumable, (consumable) => consumable.defects)
   consumable: Consumable;
 
-  @ManyToOne(() => User, (user) => user.responsibleDefects)
-  responsible: User;
+  @ManyToMany(() => User)
+  @JoinTable()
+  responsible: User[];
 
   @ManyToOne(() => Machine, (machine) => machine.defects)
   machine: Machine;
