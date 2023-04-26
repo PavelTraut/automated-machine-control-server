@@ -1,5 +1,6 @@
 import { IsString, IsUUID } from 'class-validator';
 import User from '../../entitys/user.entity';
+import Consumable from '../../entitys/consumable.entity';
 
 export default class AddDefectDto {
   @IsString()
@@ -11,8 +12,7 @@ export default class AddDefectDto {
   @IsString()
   machineId: string;
 
-  @IsUUID()
-  consumable: string;
+  consumables: Consumable[];
 
   responsible: User[];
 

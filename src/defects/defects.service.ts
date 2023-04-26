@@ -17,11 +17,15 @@ export class DefectsService {
   async add(addDefectDto: AddDefectDto) {
     const defect = this.defectsRepo.create({
       ...addDefectDto,
-      consumable: { id: addDefectDto.consumable },
       machine: { id: addDefectDto.machineId },
     });
 
-    await this.consumablesService.useConsumable(addDefectDto.consumable);
+    await Promise.all(
+      addDefectDto.consumables.map(async (c) => {
+        console.log(c);
+        await this.consumablesService.useConsumable(c.id);
+      }),
+    );
 
     return this.defectsRepo.save(defect);
   }
@@ -37,21 +41,21 @@ export class DefectsService {
         isResolved: { direction: 'ASC' },
         decisionDate: { direction: 'DESC' },
       },
-      relations: ['consumable', 'responsible'],
+      relations: ['consumables', 'responsible'],
     });
   }
 
   getByUser(user: User) {
     return this.defectsRepo.find({
       where: { machine: { departament: { id: user.departament.id } } },
-      relations: ['consumable', 'responsible'],
+      relations: ['consumables', 'responsible'],
     });
   }
 
   getById(id: string) {
     return this.defectsRepo.findOne({
       where: { id },
-      relations: ['consumable', 'responsible'],
+      relations: ['consumables', 'responsible'],
     });
   }
 

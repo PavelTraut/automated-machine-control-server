@@ -38,8 +38,9 @@ class Defect {
   @UpdateDateColumn()
   updateAt: Date;
 
-  @ManyToOne(() => Consumable, (consumable) => consumable.defects)
-  consumable: Consumable;
+  @ManyToMany(() => Consumable)
+  @JoinTable()
+  consumables: Consumable[];
 
   @ManyToMany(() => User)
   @JoinTable()

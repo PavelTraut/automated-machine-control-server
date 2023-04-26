@@ -21,9 +21,6 @@ class Consumable {
   @Column({ default: false })
   isUsed: boolean;
 
-  @OneToMany(() => Defect, (defect) => defect.consumable)
-  defects: Defect[];
-
   @ManyToOne(() => ConsumableType, (type) => type.consumables)
   type: ConsumableType;
 
