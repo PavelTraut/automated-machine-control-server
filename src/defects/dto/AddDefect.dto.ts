@@ -18,5 +18,6 @@ export default class AddDefectDto {
 
   decisionDate: Date;
 
+  @IsUUID()
   type: string;
 }

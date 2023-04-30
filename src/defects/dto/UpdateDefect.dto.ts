@@ -12,5 +12,7 @@ export default class UpdateDefectDto {
   description: string;
 
   decisionDate: Date;
+
+  @IsUUID()
   type: string;
 }
