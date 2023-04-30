@@ -5,6 +5,7 @@ import Defect from './defect.entity';
 import Departament from './departament.entity';
 import Consumable from './consumable.entity';
 import ConsumableType from './consumable-type.entity';
+import DefectType from './defect-type';
 
 export default [
   Log,
@@ -14,4 +15,5 @@ export default [
   Departament,
   Consumable,
   ConsumableType,
+  DefectType,
 ];

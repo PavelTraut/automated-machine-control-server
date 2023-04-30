@@ -11,6 +11,7 @@ import {
 import Machine from './machine.entity';
 import Consumable from './consumable.entity';
 import User from './user.entity';
+import DefectType from './defect-type';
 
 @Entity({ name: 'defects' })
 class Defect {
@@ -26,8 +27,8 @@ class Defect {
   @Column({ default: false })
   isResolved: boolean;
 
-  @Column({ nullable: true })
-  type: string;
+  @ManyToOne(() => DefectType, (type) => type.defects)
+  type: DefectType;
 
   @Column({ nullable: true })
   decisionDate: Date;
