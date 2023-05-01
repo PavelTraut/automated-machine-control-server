@@ -33,7 +33,9 @@ class User {
   @CreateDateColumn()
   createdDate: Date;
 
-  @ManyToOne(() => Departament, (departament) => departament.workers)
+  @ManyToOne(() => Departament, (departament) => departament.workers, {
+    onDelete: 'SET NULL',
+  })
   departament: Departament;
 
   @OneToMany(() => Defect, (defect) => defect.responsible)

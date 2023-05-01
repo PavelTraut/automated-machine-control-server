@@ -44,7 +44,9 @@ class Machine {
   })
   departament: Departament;
 
-  @OneToMany(() => Defect, (defect) => defect.machine)
+  @OneToMany(() => Defect, (defect) => defect.machine, {
+    onDelete: 'SET NULL',
+  })
   defects: Defect[];
 }
 

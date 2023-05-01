@@ -15,7 +15,7 @@ class Departament {
   @Column()
   name: string;
 
-  @OneToMany(() => User, (user) => user.departament)
+  @OneToMany(() => User, (user) => user.departament, { onDelete: 'SET NULL' })
   workers: User[];
 
   @OneToMany(() => Machine, (machine) => machine.departament, {

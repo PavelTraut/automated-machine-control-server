@@ -47,7 +47,9 @@ class Defect {
   @JoinTable()
   responsible: User[];
 
-  @ManyToOne(() => Machine, (machine) => machine.defects)
+  @ManyToOne(() => Machine, (machine) => machine.defects, {
+    onDelete: 'SET NULL',
+  })
   machine: Machine;
 }
 
