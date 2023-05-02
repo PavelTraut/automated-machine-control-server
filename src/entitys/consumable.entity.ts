@@ -21,7 +21,9 @@ class Consumable {
   @Column({ default: true })
   isAvailable: boolean;
 
-  @ManyToOne(() => ConsumableType, (type) => type.consumables)
+  @ManyToOne(() => ConsumableType, (type) => type.consumables, {
+    onDelete: 'SET NULL',
+  })
   type: ConsumableType;
 
   @CreateDateColumn()
