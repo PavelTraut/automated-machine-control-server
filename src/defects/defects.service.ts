@@ -55,7 +55,7 @@ export class DefectsService {
   getById(id: string) {
     return this.defectsRepo.findOne({
       where: { id },
-      relations: ['consumables', 'responsible', 'type'],
+      relations: ['consumables', 'responsible', 'type', 'machine'],
     });
   }
 
