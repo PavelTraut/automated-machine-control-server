@@ -19,8 +19,17 @@ export class ConsumablesService {
     return this.consumablesRepo.save(consumable);
   }
 
-  getAll() {
+  getUnUsed() {
     return this.consumablesRepo.find({
+      where: { isAvailable: true },
+      order: { createdAt: 'DESC' },
+      relations: ['type'],
+    });
+  }
+
+  getUsed() {
+    return this.consumablesRepo.find({
+      where: { isAvailable: false },
       order: { createdAt: 'DESC' },
       relations: ['type'],
     });

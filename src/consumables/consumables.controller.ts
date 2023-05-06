@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ConsumablesService } from './consumables.service';
 import Roles from '../decorators/roles.decorator';
 import CreateConsumableDto from './dto/CreateConsumable.dto';
@@ -9,8 +17,11 @@ export class ConsumablesController {
   constructor(private consumablesService: ConsumablesService) {}
 
   @Get()
-  getAll() {
-    return this.consumablesService.getAll();
+  getAll(@Query('used') used: boolean) {
+    if (used) {
+      return this.consumablesService.getUsed();
+    }
+    return this.consumablesService.getUnUsed();
   }
 
   @Get(':id')
