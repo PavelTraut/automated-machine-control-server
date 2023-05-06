@@ -12,9 +12,9 @@ export default class AddDefectDto {
   @IsString()
   machineId: string;
 
-  consumables: Consumable[];
+  consumables: string[];
 
-  responsible: User[];
+  responsible: string[];
 
   decisionDate: Date;
 

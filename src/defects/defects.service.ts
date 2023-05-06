@@ -17,13 +17,15 @@ export class DefectsService {
   async add(addDefectDto: AddDefectDto) {
     const defect = this.defectsRepo.create({
       ...addDefectDto,
+      responsible: addDefectDto.responsible.map((id) => ({ id })),
+      consumables: addDefectDto.consumables.map((id) => ({ id })),
       machine: { id: addDefectDto.machineId },
       type: { id: addDefectDto.type },
     });
 
     await Promise.all(
       addDefectDto.consumables.map(async (c) => {
-        await this.consumablesService.useConsumable(c.id);
+        await this.consumablesService.useConsumable(c);
       }),
     );
 
@@ -60,14 +62,36 @@ export class DefectsService {
   }
 
   async update(updateDefectDto: UpdateDefectDto) {
-    await this.defectsRepo.update(updateDefectDto.id, {
+    const original = await this.getById(updateDefectDto.id);
+    await Promise.all(
+      original.consumables.map(async (c) => {
+        await this.consumablesService.unUseConsumable(c.id);
+      }),
+    );
+
+    await this.delete(original.id);
+    return this.add({
+      ...original,
+      consumables: original?.consumables.map((c) => c.id),
+      responsible: original?.responsible.map((c) => c.id),
       ...updateDefectDto,
-      type: { id: updateDefectDto.type },
+      machineId: original.machine.id,
     });
-    return this.getById(updateDefectDto.id);
   }
 
   delete(id: string) {
     return this.defectsRepo.delete(id);
+  }
+
+  async deleteWithCheck(id: string) {
+    const original = await this.getById(id);
+
+    await Promise.all(
+      original.consumables.map(async (c) => {
+        await this.consumablesService.unUseConsumable(c.id);
+      }),
+    );
+
+    return this.delete(id);
   }
 }

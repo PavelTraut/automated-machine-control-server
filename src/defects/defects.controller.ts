@@ -50,7 +50,11 @@ export class DefectsController {
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: string, @Query('check') check: boolean) {
+    if (check) {
+      return this.defectsService.deleteWithCheck(id);
+    }
+
     return this.defectsService.delete(id);
   }
 }

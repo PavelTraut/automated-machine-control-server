@@ -11,6 +11,10 @@ export default class UpdateDefectDto {
   @IsString()
   description: string;
 
+  consumables: string[];
+
+  responsible: string[];
+
   decisionDate: Date;
 
   @IsUUID()
