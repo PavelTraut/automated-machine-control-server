@@ -9,12 +9,12 @@ class LogsMiddleware implements NestMiddleware {
     response.on('finish', () => {
       const { method, originalUrl, body, headers } = request;
       const { statusCode, statusMessage } = response;
-
+      console.log(request, response);
       const message = `${method} ${originalUrl} ${statusCode} ${statusMessage} \nBody: ${JSON.stringify(
         body,
         null,
         2,
-      )} \nHeaders: ${JSON.stringify(headers, null, 2)}`;
+      )} \nAuthorization: ${headers.authorization}`;
 
       if (statusCode >= 500) {
         return this.logger.error(message);
