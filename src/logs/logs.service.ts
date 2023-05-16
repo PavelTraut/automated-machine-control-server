@@ -13,8 +13,12 @@ export default class LogsService {
   ) {}
 
   async createLog(log: CreateLogDto) {
-    console.log(process.env.SAVE_LOGS, !process.env.SAVE_LOGS);
-    if (!process.env.SAVE_LOGS) {
+    console.log(
+      !process.env.SAVE_LOGS || +process.env.SAVE_LOGS == 0,
+      !process.env.SAVE_LOGS,
+      +process.env.SAVE_LOGS == 0,
+    );
+    if (!process.env.SAVE_LOGS || +process.env.SAVE_LOGS == 0) {
       return;
     }
 
