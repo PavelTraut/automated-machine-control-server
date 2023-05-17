@@ -12,8 +12,20 @@ export default class LogsService {
     private logsRepository: Repository<Log>,
   ) {}
 
+  getLogs({ page = 0, limit = 10 }) {
+    return this.logsRepository.find({
+      order: { creationDate: 'DESC' },
+      take: limit,
+      skip: limit * (page - 1),
+    });
+  }
+
+  count() {
+    return this.logsRepository.count();
+  }
+
   async createLog(log: CreateLogDto) {
-    if (!process.env.SAVE_LOGS || +process.env.SAVE_LOGS == 0) {
+    if (!process.env.SAVE_LOGS || +process.env.SAVE_LOGS == 0 || !log.action) {
       return;
     }
 
