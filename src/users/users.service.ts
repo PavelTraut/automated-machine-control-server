@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import User from '../entitys/user.entity';
 import { Repository } from 'typeorm';
@@ -11,7 +11,14 @@ export class UsersService {
     @InjectRepository(User) private readonly usersRepo: Repository<User>,
   ) {}
 
-  add(addUserDto: AddUserDto) {
+  async add(addUserDto: AddUserDto) {
+    const realUser = await this.findByLogin(addUserDto.login);
+    if (realUser) {
+      throw new BadRequestException(
+        'Пользователь с таким логином уже существует',
+      );
+    }
+
     const user = this.usersRepo.create({
       ...addUserDto,
       departament: addUserDto.departamentId
