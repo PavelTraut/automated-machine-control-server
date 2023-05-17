@@ -11,9 +11,6 @@ class Log {
   public id: number;
 
   @Column()
-  public message: string;
-
-  @Column()
   public level: string;
 
   @Column({ nullable: true })
