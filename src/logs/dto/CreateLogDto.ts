@@ -1,9 +1,10 @@
 export default class CreateLogDto {
-  public context: string;
+  public level?: string;
 
-  public message: string;
+  public action?: string;
+  public status?: string;
 
-  public level: string;
+  public user?: string;
 
-  creationDate?: Date = new Date();
+  public body?: string;
 }

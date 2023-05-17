@@ -1,5 +1,5 @@
 import { RolesGuard } from './../guards/role.guard';
-import { Body, Controller, Post, UseGuards} from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import LoginDto from './dto/Login.dto';
 import { AuthService } from './auth.service';
 import GetUser from 'src/decorators/get-user.decorator';
@@ -10,16 +10,16 @@ import Roles from 'src/decorators/roles.decorator';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('login')
-  async login(
-    @Body() loginDto: LoginDto,
-  ) {
-    return this.authService.getAuthorize(await this.authService.login(loginDto))
+  async login(@Body() loginDto: LoginDto) {
+    return this.authService.getAuthorize(
+      await this.authService.login(loginDto),
+    );
   }
 
   @Post('me')
   @UseGuards(RolesGuard)
   @Roles('all')
-  async me(@GetUser() user:User) {
-    return this.authService.getAuthorize(user)
+  me(@GetUser() user: User) {
+    return this.authService.getAuthorize(user);
   }
 }
