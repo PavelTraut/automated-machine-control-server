@@ -72,6 +72,7 @@ export class DefectsService {
     await this.delete(original.id);
     return this.add({
       ...original,
+      type: original.type.id,
       consumables: original?.consumables.map((c) => c.id),
       responsible: original?.responsible.map((c) => c.id),
       ...updateDefectDto,
