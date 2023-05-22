@@ -6,20 +6,25 @@ import AddDefectDto from './dto/AddDefect.dto';
 import UpdateDefectDto from './dto/UpdateDefect.dto';
 import User from '../entitys/user.entity';
 import { ConsumablesService } from '../consumables/consumables.service';
+import { DefectNamesService } from '../defect-names/defect-names.service';
 
 @Injectable()
 export class DefectsService {
   constructor(
     @InjectRepository(Defect) private readonly defectsRepo: Repository<Defect>,
     private readonly consumablesService: ConsumablesService,
+    private readonly defectNamesService: DefectNamesService,
   ) {}
 
   async add(addDefectDto: AddDefectDto) {
+    const defectName = await this.defectNamesService.createOrFind(addDefectDto);
+
     const defect = this.defectsRepo.create({
       ...addDefectDto,
       responsible: addDefectDto.responsible.map((id) => ({ id })),
       consumables: addDefectDto.consumables.map((id) => ({ id })),
       machine: { id: addDefectDto.machineId },
+      name: { id: defectName.id },
       type: { id: addDefectDto.type },
     });
 
@@ -43,21 +48,21 @@ export class DefectsService {
         isResolved: { direction: 'ASC' },
         decisionDate: { direction: 'DESC' },
       },
-      relations: ['consumables', 'responsible', 'type'],
+      relations: ['consumables', 'responsible', 'type', 'name'],
     });
   }
 
   getByUser(user: User) {
     return this.defectsRepo.find({
       where: { machine: { departament: { id: user.departament.id } } },
-      relations: ['consumables', 'responsible', 'type'],
+      relations: ['consumables', 'responsible', 'type', 'name'],
     });
   }
 
   getById(id: string) {
     return this.defectsRepo.findOne({
       where: { id },
-      relations: ['consumables', 'responsible', 'type', 'machine'],
+      relations: ['consumables', 'responsible', 'type', 'machine', 'name'],
     });
   }
 
