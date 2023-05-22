@@ -16,6 +16,7 @@ import { JwtModule } from './jwt/jwt.module';
 import { ConsumablesModule } from './consumables/consumables.module';
 import { ConsumableTypesModule } from './consumable-types/consumable-types.module';
 import { DefectTypesModule } from './defect-types/defect-types.module';
+import { DefectNamesModule } from './defect-names/defect-names.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { DefectTypesModule } from './defect-types/defect-types.module';
     ConsumablesModule,
     ConsumableTypesModule,
     DefectTypesModule,
+    DefectNamesModule,
   ],
   providers: [AuthMiddleware],
 })
