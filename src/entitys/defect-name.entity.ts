@@ -12,8 +12,8 @@ class DefectName {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column()
-  name: string;
+  @Column({ unique: true })
+  defectName: string;
 
   @OneToMany(() => Defect, (defect) => defect.type)
   defects: Defect[];

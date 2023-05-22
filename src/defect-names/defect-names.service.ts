@@ -12,7 +12,7 @@ export class DefectNamesService {
   ) {}
 
   async add({ name }: AddNameDto) {
-    const type = this.defectNamesRepo.create({ name });
+    const type = this.defectNamesRepo.create({ defectName: name });
     return this.defectNamesRepo.save(type);
   }
 
@@ -26,12 +26,12 @@ export class DefectNamesService {
   }
 
   async getByName(name: string) {
-    return this.defectNamesRepo.findOneBy({ name });
+    return this.defectNamesRepo.findOneBy({ defectName: name });
   }
 
   getAll(name = '') {
     return this.defectNamesRepo.find({
-      where: { name: Like(`%${name}%`) },
+      where: { defectName: Like(`%${name}%`) },
       order: { createdAt: 'DESC' },
     });
   }
