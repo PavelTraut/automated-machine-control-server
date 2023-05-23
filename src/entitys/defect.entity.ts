@@ -12,14 +12,12 @@ import Machine from './machine.entity';
 import Consumable from './consumable.entity';
 import User from './user.entity';
 import DefectType from './defect-type';
+import DefectName from './defect-name.entity';
 
 @Entity({ name: 'defects' })
 class Defect {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
-
-  @Column()
-  name: string;
 
   @Column({ default: '' })
   description: string;
@@ -29,6 +27,9 @@ class Defect {
 
   @ManyToOne(() => DefectType, (type) => type.defects)
   type: DefectType;
+
+  @ManyToOne(() => DefectName, (name) => name.defects)
+  name: DefectName;
 
   @Column({ nullable: true })
   decisionDate: Date;

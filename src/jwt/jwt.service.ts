@@ -10,7 +10,7 @@ export class JwtService {
 
   generateAccessToken({ id, role }: User) {
     return sign({ id, role }, this.getAccessSecret(), {
-      expiresIn: '24h',
+      expiresIn: '30d',
     });
   }
 
