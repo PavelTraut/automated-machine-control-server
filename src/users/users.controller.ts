@@ -15,7 +15,7 @@ import Roles from '../decorators/roles.decorator';
 import UpdateUserDto from './dto/UpdateUser.dto';
 
 @Controller('users')
-// @UseGuards(RolesGuard)
+@UseGuards(RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Post()
