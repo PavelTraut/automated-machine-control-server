@@ -4,6 +4,8 @@ import User from '../entitys/user.entity';
 import { Repository } from 'typeorm';
 import AddUserDto from './dto/AddUser.dto';
 import UpdateUserDto from './dto/UpdateUser.dto';
+import RegeneratePassDto from './dto/RegeneratePass.dto';
+import { generate } from 'generate-password';
 
 @Injectable()
 export class UsersService {
@@ -56,5 +58,23 @@ export class UsersService {
 
   delete(id: string) {
     return this.usersRepo.update(id, { isActive: false });
+  }
+
+  async regeneratePassword({ userId }: RegeneratePassDto) {
+    const user = await this.getById(userId);
+
+    if (!user) {
+      throw new BadRequestException('Такого пользователя не существует');
+    }
+
+    const password = generate({
+      length: 10,
+      numbers: true,
+      uppercase: false,
+    });
+
+    await this.usersRepo.update(userId, { password });
+
+    return password;
   }
 }

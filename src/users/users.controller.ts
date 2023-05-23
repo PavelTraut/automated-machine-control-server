@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   UseGuards,
@@ -13,6 +14,7 @@ import AddUserDto from './dto/AddUser.dto';
 import { UsersService } from './users.service';
 import Roles from '../decorators/roles.decorator';
 import UpdateUserDto from './dto/UpdateUser.dto';
+import RegeneratePassDto from './dto/RegeneratePass.dto';
 
 @Controller('users')
 @UseGuards(RolesGuard)
@@ -44,5 +46,10 @@ export class UsersController {
   @Roles('admin')
   delete(@Param('id') id: string) {
     return this.usersService.delete(id);
+  }
+
+  @Patch('regenerate-pass')
+  regeneratePass(@Body() dto: RegeneratePassDto) {
+    return this.usersService.regeneratePassword(dto);
   }
 }
