@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import Defect from './defect.entity';
 
-@Entity({ name: 'defect_types' })
+@Entity({ name: 'defect_names' })
 class DefectName {
   @PrimaryGeneratedColumn('uuid')
   public id: string;

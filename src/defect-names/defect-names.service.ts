@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import DefectName from '../entitys/defect-name.entity';
 import AddNameDto from './dto/AddName.dto';
 
@@ -31,7 +31,8 @@ export class DefectNamesService {
 
   getAll(name = '') {
     return this.defectNamesRepo.find({
-      where: { defectName: Like(`%${name}%`) },
+      where: { defectName: ILike(`%${name}%`) },
+      take: 50,
       order: { createdAt: 'DESC' },
     });
   }
