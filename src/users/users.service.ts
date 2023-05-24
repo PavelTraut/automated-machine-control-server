@@ -6,6 +6,7 @@ import AddUserDto from './dto/AddUser.dto';
 import UpdateUserDto from './dto/UpdateUser.dto';
 import RegeneratePassDto from './dto/RegeneratePass.dto';
 import { generate } from 'generate-password';
+import { hash } from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -73,8 +74,15 @@ export class UsersService {
       uppercase: false,
     });
 
-    await this.usersRepo.update(userId, { password });
+    await this.usersRepo.update(userId, {
+      password: await new Promise((resolve, reject) => {
+        hash(password, 10, function (err, hash) {
+          if (err) reject(err);
+          resolve(hash);
+        });
+      }),
+    });
 
-    return password;
+    return { newPassword: password };
   }
 }
