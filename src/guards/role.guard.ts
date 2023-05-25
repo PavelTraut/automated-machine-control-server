@@ -12,7 +12,9 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const request: AppRequest = context.switchToHttp().getRequest();
+
     return (
+      request.user?.role === 'sudo' ||
       (roles.includes('all') && !!request.user) ||
       roles.includes(request.user?.role)
     );
