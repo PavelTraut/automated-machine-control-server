@@ -12,11 +12,11 @@ import Roles from '../decorators/roles.decorator';
 import CreateConsumableDto from './dto/CreateConsumable.dto';
 
 @Controller('consumables')
-@Roles('all')
 export class ConsumablesController {
   constructor(private consumablesService: ConsumablesService) {}
 
   @Get()
+  @Roles('all')
   getAll(@Query('used') used: boolean) {
     if (used) {
       return this.consumablesService.getUsed();
@@ -25,16 +25,19 @@ export class ConsumablesController {
   }
 
   @Get(':id')
+  @Roles('all')
   getById(@Param('id') id: string) {
     return this.consumablesService.getById(id);
   }
 
   @Post()
+  @Roles('all')
   add(@Body() dto: CreateConsumableDto) {
     return this.consumablesService.add(dto);
   }
 
   @Delete(':id')
+  @Roles('all')
   delete(@Param('id') id: string) {
     return this.consumablesService.delete(id);
   }

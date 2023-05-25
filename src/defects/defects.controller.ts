@@ -19,37 +19,39 @@ import User from '../entitys/user.entity';
 
 @Controller('defects')
 @UseGuards(RolesGuard)
-@Roles('all')
 export class DefectsController {
   constructor(private readonly defectsService: DefectsService) {}
 
   @Get()
+  @Roles('all')
   getAll(@GetUser() user: User, @Query('machine') machineId: string) {
     if (machineId) {
       return this.defectsService.getByMachine(machineId);
     }
-    if (user.role === 'user') {
-      return this.defectsService.getByUser(user);
-    }
+
     return this.defectsService.getAll();
   }
 
   @Get(':id')
+  @Roles('all')
   getById(@Param('id') id: string) {
     return this.defectsService.getById(id);
   }
 
   @Post()
+  @Roles('all')
   add(@Body() addDefectDto: AddDefectDto) {
     return this.defectsService.add(addDefectDto);
   }
 
   @Put()
+  @Roles('all')
   update(@Body() updateDefectDto: UpdateDefectDto) {
     return this.defectsService.update(updateDefectDto);
   }
 
   @Delete(':id')
+  @Roles('admin')
   delete(@Param('id') id: string, @Query('check') check: boolean) {
     if (check) {
       return this.defectsService.deleteWithCheck(id);

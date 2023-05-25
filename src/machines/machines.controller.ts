@@ -21,17 +21,15 @@ import User from '../entitys/user.entity';
 @UseGuards(RolesGuard)
 export class MachinesController {
   constructor(private readonly machinesService: MachinesService) {}
-  @Roles('admin')
+
   @Post()
+  @Roles('admin')
   add(@Body() createMachineDto: CreateMachineDto) {
     return this.machinesService.add(createMachineDto);
   }
-  @Roles('all')
   @Get()
+  @Roles('all')
   getAll(@GetUser() user: User, @Query('departament') departament: string) {
-    if (user.role === 'user') {
-      return this.machinesService.getByUser(user);
-    }
     if (departament) {
       return this.machinesService.getByDepartament(departament);
     }
@@ -44,13 +42,13 @@ export class MachinesController {
     return this.machinesService.getById(id);
   }
 
-  @Roles('admin')
   @Put()
+  @Roles('admin')
   update(@Body() updateMachineDto: UpdateMachineDto) {
     return this.machinesService.update(updateMachineDto);
   }
-  @Roles('admin')
   @Delete(':id')
+  @Roles('admin')
   delete(@Param('id') id: string) {
     return this.machinesService.delete(id);
   }

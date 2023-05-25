@@ -22,7 +22,10 @@ export class AuthService {
       this.throwUnauthorizedException();
     }
 
-    const isPasswordEqual = this.cryptoService.compare(user.password, password);
+    const isPasswordEqual = await this.cryptoService.compare(
+      user.password,
+      password,
+    );
     if (!isPasswordEqual) {
       this.throwUnauthorizedException();
     }
@@ -36,11 +39,11 @@ export class AuthService {
     return {
       user,
       accessToken,
-    }
+    };
   }
 
   // loginByRefreshToken(token:string) {
-    // return this.jwtService.verifyRefreshToken(token) as User;
+  // return this.jwtService.verifyRefreshToken(token) as User;
   // }
 
   private throwUnauthorizedException() {
