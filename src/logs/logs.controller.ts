@@ -1,15 +1,15 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../guards/role.guard';
 import Roles from '../decorators/roles.decorator';
 import LogsService from './logs.service';
 
 @Controller('logs')
 @UseGuards(RolesGuard)
-@Roles('user')
 export class LogsController {
   constructor(private readonly logsService: LogsService) {}
 
   @Get()
+  @Roles('admin')
   get(
     @Query('limit') limit: number,
     @Query('page') page: number,

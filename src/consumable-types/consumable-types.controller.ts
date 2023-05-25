@@ -16,31 +16,35 @@ import UpdateConsumbleTypeDto from './dto/UpdateConsumbleType.dto';
 
 @Controller('consumable-types')
 @UseGuards(RolesGuard)
-@Roles('admin')
 export class ConsumableTypesController {
   constructor(private consumableTypesService: ConsumableTypesService) {}
 
   @Get('')
+  @Roles('all')
   getAll() {
     return this.consumableTypesService.getAll();
   }
 
   @Get(':id')
+  @Roles('all')
   getById(@Param('id') id: string) {
     return this.consumableTypesService.getById(id);
   }
 
   @Post()
+  @Roles('admin')
   add(@Body() dto: AddConsumableTypeDto) {
     return this.consumableTypesService.add(dto);
   }
 
   @Put()
+  @Roles('admin')
   update(@Body() dto: UpdateConsumbleTypeDto) {
     return this.consumableTypesService.update(dto);
   }
 
   @Delete(':id')
+  @Roles('admin')
   delete(@Param('id') id: string) {
     return this.consumableTypesService.delete(id);
   }

@@ -5,11 +5,11 @@ import Roles from '../decorators/roles.decorator';
 
 @Controller('defect-names')
 @UseGuards(RolesGuard)
-@Roles('user')
 export class DefectNamesController {
   constructor(private readonly defectNamesService: DefectNamesService) {}
 
   @Get()
+  @Roles('all')
   getAll(@Query('name') name: string) {
     return this.defectNamesService.getAll(name);
   }
