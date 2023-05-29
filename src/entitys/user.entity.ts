@@ -12,6 +12,7 @@ import { hash } from 'bcryptjs';
 import Role from '../types/Role';
 import Departament from './departament.entity';
 import Defect from './defect.entity';
+import Specialization from './specialization.entity';
 
 @Entity({ name: 'users' })
 class User {
@@ -40,6 +41,11 @@ class User {
 
   @OneToMany(() => Defect, (defect) => defect.responsible)
   responsibleDefects: Defect[];
+
+  @ManyToOne(() => Defect, (defect) => defect.responsible, {
+    onDelete: 'SET NULL',
+  })
+  specialization: Specialization;
 
   @BeforeInsert()
   @BeforeUpdate()

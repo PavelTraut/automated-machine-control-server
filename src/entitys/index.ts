@@ -7,6 +7,7 @@ import Consumable from './consumable.entity';
 import ConsumableType from './consumable-type.entity';
 import DefectType from './defect-type';
 import DefectName from './defect-name.entity';
+import Specialization from './specialization.entity';
 
 export default [
   Log,
@@ -18,4 +19,5 @@ export default [
   ConsumableType,
   DefectType,
   DefectName,
+  Specialization,
 ];
