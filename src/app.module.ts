@@ -17,6 +17,7 @@ import { ConsumablesModule } from './consumables/consumables.module';
 import { ConsumableTypesModule } from './consumable-types/consumable-types.module';
 import { DefectTypesModule } from './defect-types/defect-types.module';
 import { DefectNamesModule } from './defect-names/defect-names.module';
+import { SpecializationsModule } from './specializations/specializations.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { DefectNamesModule } from './defect-names/defect-names.module';
     ConsumableTypesModule,
     DefectTypesModule,
     DefectNamesModule,
+    SpecializationsModule,
   ],
   providers: [AuthMiddleware],
 })
