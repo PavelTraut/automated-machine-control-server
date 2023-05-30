@@ -13,7 +13,15 @@ export class DefectTypesService {
   ) {}
 
   async add({ name }: AddTypeDto) {
-    await this.checkNameAvalable(name);
+    const existed = await this.defectTypesRepo.findOneBy({ name });
+
+    if (existed) {
+      if (existed.isHide) {
+        await this.defectTypesRepo.update(existed.id, { isHide: false });
+        return existed;
+      }
+      throw new BadRequestException('Тип с таким именем уже существует!');
+    }
 
     const type = this.defectTypesRepo.create({ name });
     return this.defectTypesRepo.save(type);
@@ -27,7 +35,10 @@ export class DefectTypesService {
   }
 
   getAll() {
-    return this.defectTypesRepo.find({ order: { createdAt: 'DESC' } });
+    return this.defectTypesRepo.find({
+      order: { createdAt: 'DESC' },
+      where: { isHide: false },
+    });
   }
 
   getById(id: string) {
@@ -42,6 +53,6 @@ export class DefectTypesService {
   }
 
   delete(id: string) {
-    return this.defectTypesRepo.delete(id);
+    return this.defectTypesRepo.update(id, { isHide: true });
   }
 }
