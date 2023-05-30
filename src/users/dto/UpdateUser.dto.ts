@@ -10,9 +10,7 @@ export default class UpdateUserDto {
 
   @IsString()
   @MinLength(8)
-  password: string;
-
-  @IsString()
-  @MinLength(8)
   login: string;
+
+  specializationId: string;
 }

@@ -42,7 +42,7 @@ class User {
   @OneToMany(() => Defect, (defect) => defect.responsible)
   responsibleDefects: Defect[];
 
-  @ManyToOne(() => Defect, (defect) => defect.responsible, {
+  @ManyToOne(() => Specialization, (specialization) => specialization.users, {
     onDelete: 'SET NULL',
   })
   specialization: Specialization;
