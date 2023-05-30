@@ -12,7 +12,7 @@ export class SpecializationsService {
     private readonly specializationsRepository: Repository<Specialization>,
   ) {}
 
-  add(dto: AddSpecializationDto) {
+  async add(dto: AddSpecializationDto) {
     const specialization = this.specializationsRepository.create({
       ...dto,
       types: dto.types.map((typeId) => ({
@@ -20,7 +20,9 @@ export class SpecializationsService {
       })),
     });
 
-    return this.specializationsRepository.save(specialization);
+    const saved = await this.specializationsRepository.save(specialization);
+
+    return this.getById(saved.id);
   }
 
   delete(id: string) {
