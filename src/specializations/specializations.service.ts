@@ -39,9 +39,10 @@ export class SpecializationsService {
   }
 
   getAll() {
-    return this.specializationsRepository.findOne({
+    return this.specializationsRepository.find({
       where: {},
       relations: ['types'],
+      order: { createdAt: 'DESC' },
     });
   }
 
