@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Specialization from '../entitys/specialization.entity';
@@ -13,6 +13,19 @@ export class SpecializationsService {
   ) {}
 
   async add(dto: AddSpecializationDto) {
+    const existed = await this.findByName(dto.name);
+
+    if (existed) {
+      if (existed.isHide) {
+        await this.specializationsRepository.update(existed.id, {
+          isHide: false,
+        });
+        return existed;
+      }
+
+      this.throwNameBlockExeption();
+    }
+
     const specialization = this.specializationsRepository.create({
       ...dto,
       types: dto.types.map((typeId) => ({
@@ -26,10 +39,16 @@ export class SpecializationsService {
   }
 
   delete(id: string) {
-    return this.specializationsRepository.delete(id);
+    return this.specializationsRepository.update(id, { isHide: true });
   }
 
-  update(dto: UpdateSpecializationDto) {
+  async update(dto: UpdateSpecializationDto) {
+    const existed = await this.findByName(dto.name);
+
+    if (existed && existed.id != dto.id) {
+      this.throwNameBlockExeption();
+    }
+
     const specialization = this.specializationsRepository.create({
       ...dto,
       types: dto.types.map((typeId) => ({
@@ -42,7 +61,7 @@ export class SpecializationsService {
 
   getAll() {
     return this.specializationsRepository.find({
-      where: {},
+      where: { isHide: false },
       relations: ['types'],
       order: { createdAt: 'DESC' },
     });
@@ -53,5 +72,18 @@ export class SpecializationsService {
       where: { id },
       relations: ['types'],
     });
+  }
+
+  private findByName(name: string) {
+    return this.specializationsRepository.findOne({
+      where: { name },
+      relations: ['types'],
+    });
+  }
+
+  throwNameBlockExeption() {
+    throw new BadRequestException(
+      'Специальность с таким именем уже существует',
+    );
   }
 }

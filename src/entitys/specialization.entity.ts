@@ -27,6 +27,9 @@ class Specialization {
   @ManyToMany(() => DefectType)
   @JoinTable()
   types: DefectType[];
+
+  @Column({ default: false })
+  isHide: boolean;
 }
 
 export default Specialization;
