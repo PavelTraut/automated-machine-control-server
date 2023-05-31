@@ -13,13 +13,9 @@ export class DefectTypesService {
   ) {}
 
   async add({ name }: AddTypeDto) {
-    const existed = await this.defectTypesRepo.findOneBy({ name });
+    const existed = await this.findByName(name);
 
     if (existed) {
-      if (existed.isHide) {
-        await this.defectTypesRepo.update(existed.id, { isHide: false });
-        return existed;
-      }
       throw new BadRequestException('Тип с таким именем уже существует!');
     }
 
@@ -28,7 +24,7 @@ export class DefectTypesService {
   }
 
   private async checkNameAvalable(name: string, id?: string) {
-    const existed = await this.defectTypesRepo.findOneBy({ name });
+    const existed = await this.findByName(name);
     if (existed && existed.id !== id) {
       throw new BadRequestException('Тип с таким именем уже существует!');
     }
@@ -54,5 +50,9 @@ export class DefectTypesService {
 
   delete(id: string) {
     return this.defectTypesRepo.update(id, { isHide: true });
+  }
+
+  findByName(name: string) {
+    return this.defectTypesRepo.findOneBy({ name, isHide: false });
   }
 }

@@ -13,15 +13,9 @@ export class ConsumableTypesService {
   ) {}
 
   async add({ name }: AddConsumableTypeDto) {
-    const existedType = await this.consumableTypesRepo.findOneBy({ name });
+    const existedType = await this.findByName(name);
 
     if (existedType) {
-      if (existedType.isHide) {
-        await this.consumableTypesRepo.update(existedType.id, {
-          isHide: false,
-        });
-        return existedType;
-      }
       throw new BadRequestException('Такой тип уже существует');
     }
 
@@ -31,9 +25,7 @@ export class ConsumableTypesService {
   }
 
   async update(dto: UpdateConsumbleTypeDto) {
-    const existedType = await this.consumableTypesRepo.findOneBy({
-      name: dto.name,
-    });
+    const existedType = await this.findByName(dto.name);
     if (existedType && existedType.id != dto.id) {
       throw new BadRequestException('Такой тип уже существует');
     }
@@ -58,5 +50,12 @@ export class ConsumableTypesService {
 
   delete(id: string) {
     return this.consumableTypesRepo.update(id, { isHide: true });
+  }
+
+  findByName(name: string) {
+    return this.consumableTypesRepo.findOneBy({
+      name,
+      isHide: false,
+    });
   }
 }

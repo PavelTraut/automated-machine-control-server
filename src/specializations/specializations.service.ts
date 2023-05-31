@@ -76,7 +76,7 @@ export class SpecializationsService {
 
   private findByName(name: string) {
     return this.specializationsRepository.findOne({
-      where: { name },
+      where: { name, isHide: false },
       relations: ['types'],
     });
   }
