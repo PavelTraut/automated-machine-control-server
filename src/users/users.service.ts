@@ -70,6 +70,13 @@ export class UsersService {
   }
 
   async update(updateUserDto: UpdateUserDto, requester: User) {
+    const realUser = await this.findByLogin(updateUserDto.login);
+    if (realUser) {
+      throw new BadRequestException(
+        'Пользователь с таким логином уже существует',
+      );
+    }
+
     const user = await this.findOrTrowException(updateUserDto.id);
 
     this.compareLevelsByRole(requester, user);
