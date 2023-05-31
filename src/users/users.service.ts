@@ -64,7 +64,7 @@ export class UsersService {
 
   findByLogin(login: string) {
     return this.usersRepo.findOne({
-      where: { login },
+      where: { login, isActive: true },
       relations: ['departament'],
     });
   }

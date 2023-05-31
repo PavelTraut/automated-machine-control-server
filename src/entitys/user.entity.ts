@@ -31,6 +31,9 @@ class User {
   @Column({ default: true })
   isActive: boolean;
 
+  @Column({ default: true })
+  isHide: boolean;
+
   @CreateDateColumn()
   createdDate: Date;
 
