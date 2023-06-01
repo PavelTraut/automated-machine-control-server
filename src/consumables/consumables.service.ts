@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Consumable from '../entitys/consumable.entity';
 import CreateConsumableDto from './dto/CreateConsumable.dto';
+import UpdateConsumableDto from './dto/UpdateConsumable.dto';
 
 @Injectable()
 export class ConsumablesService {
@@ -11,12 +12,17 @@ export class ConsumablesService {
     private readonly consumablesRepo: Repository<Consumable>,
   ) {}
 
-  add({ type, name }: CreateConsumableDto) {
+  add({ type, name, number }: CreateConsumableDto) {
     const consumable = this.consumablesRepo.create({
       name,
+      number,
       type: { id: type },
     });
     return this.consumablesRepo.save(consumable);
+  }
+
+  update({ name, number, id }: UpdateConsumableDto) {
+    return this.consumablesRepo.update(id, { name, number });
   }
 
   getUnUsed() {

@@ -2,12 +2,9 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  OneToOne,
-  OneToMany,
   ManyToOne,
   CreateDateColumn,
 } from 'typeorm';
-import Defect from './defect.entity';
 import ConsumableType from './consumable-type.entity';
 
 @Entity({ name: 'consumables' })
@@ -17,6 +14,9 @@ class Consumable {
 
   @Column()
   name: string;
+
+  @Column({ nullable: true })
+  number: string;
 
   @Column({ default: true })
   isAvailable: boolean;

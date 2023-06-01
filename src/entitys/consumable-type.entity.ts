@@ -5,7 +5,6 @@ import {
   OneToMany,
   CreateDateColumn,
 } from 'typeorm';
-import Defect from './defect.entity';
 import Consumable from './consumable.entity';
 
 @Entity({ name: 'consumable_types' })
@@ -21,6 +20,9 @@ class ConsumableType {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column({ default: false })
+  isHide: boolean;
 }
 
 export default ConsumableType;

@@ -5,11 +5,13 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ConsumablesService } from './consumables.service';
 import Roles from '../decorators/roles.decorator';
 import CreateConsumableDto from './dto/CreateConsumable.dto';
+import UpdateConsumableDto from './dto/UpdateConsumable.dto';
 
 @Controller('consumables')
 export class ConsumablesController {
@@ -34,6 +36,12 @@ export class ConsumablesController {
   @Roles('all')
   add(@Body() dto: CreateConsumableDto) {
     return this.consumablesService.add(dto);
+  }
+
+  @Put()
+  @Roles('all')
+  update(@Body() dto: UpdateConsumableDto) {
+    return this.consumablesService.update(dto);
   }
 
   @Delete(':id')

@@ -1,12 +1,10 @@
 import { IsString } from 'class-validator';
 
-export default class CreateConsumableDto {
+export default class UpdateConsumableDto {
   @IsString()
   name: string;
 
-  type: string;
+  id: string;
 
   number: string;
-
-  id: string;
 }

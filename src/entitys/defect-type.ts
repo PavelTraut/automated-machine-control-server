@@ -20,6 +20,9 @@ class DefectType {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column({ default: false })
+  isHide: boolean;
 }
 
 export default DefectType;

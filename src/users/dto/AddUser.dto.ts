@@ -13,4 +13,6 @@ export default class AddUserDto {
   login: string;
 
   departamentId: string;
+
+  specializationId: string;
 }

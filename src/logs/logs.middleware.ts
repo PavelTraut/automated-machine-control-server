@@ -23,6 +23,12 @@ class LogsMiddleware implements NestMiddleware {
         2,
       )}\nBody: ${JSON.stringify(body, null, 2)} \n`;
 
+      for (const key of Object.keys(body)) {
+        if (key === 'password') {
+          body[key] = '*****';
+        }
+      }
+
       const context: string =
         +process.env.SAVE_LOGS != 0
           ? JSON.stringify({

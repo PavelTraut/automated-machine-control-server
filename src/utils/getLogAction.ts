@@ -49,12 +49,20 @@ const actionsMap = {
     put: 'Обновление материала',
     delete: 'Удаление материала',
   },
+  specializations: {
+    get: 'Получение специальностей',
+    post: 'Добавление специальностей',
+    put: 'Обновление специальности',
+    delete: 'Удаление специальности',
+  },
 };
 
 export default function getLogAction(url: string, method: string) {
   method = method.toLowerCase();
+
   let id = null;
   const splitted = url.split('/');
+
   if (url.startsWith('/')) {
     url = url.slice(1);
   }
@@ -70,7 +78,7 @@ export default function getLogAction(url: string, method: string) {
   const action =
     actionsMap[url.split('/').find((path) => actionsMap[path]?.[method])]?.[
       method
-    ];
+    ] || actionsMap[url]?.[method];
   if (id) {
     return action + ' ' + id;
   }

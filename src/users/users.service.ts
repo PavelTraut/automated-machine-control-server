@@ -28,24 +28,29 @@ export class UsersService {
 
     const user = this.usersRepo.create({
       ...addUserDto,
+      specialization: addUserDto.specializationId
+        ? { id: addUserDto.specializationId }
+        : null,
       departament: addUserDto.departamentId
         ? { id: addUserDto.departamentId }
         : null,
     });
 
-    return this.usersRepo.save(user);
+    await this.usersRepo.save(user);
+
+    return this.getById(user.id);
   }
 
   getAll(requester: User) {
     return this.usersRepo.find({
-      relations: ['departament'],
+      relations: ['departament', 'specialization', 'specialization.types'],
       where: { role: In(GetRolesUnder(requester.role)), isActive: true },
     });
   }
 
   getById(id: string) {
     return this.usersRepo.findOne({
-      relations: ['departament'],
+      relations: ['departament', 'specialization'],
       where: { id },
     });
   }
@@ -53,23 +58,39 @@ export class UsersService {
   getByIdWithCheck(id: string, requester: User) {
     return this.usersRepo.findOne({
       where: { id, role: In(GetRolesUnder(requester.role)) },
-      relations: ['departament'],
+      relations: ['departament', 'specialization', 'specialization.types'],
     });
   }
 
   findByLogin(login: string) {
     return this.usersRepo.findOne({
-      where: { login },
+      where: { login, isActive: true },
       relations: ['departament'],
     });
   }
 
   async update(updateUserDto: UpdateUserDto, requester: User) {
+    const realUser = await this.findByLogin(updateUserDto.login);
+    if (realUser && realUser.id != updateUserDto.id) {
+      throw new BadRequestException(
+        'Пользователь с таким логином уже существует',
+      );
+    }
+
     const user = await this.findOrTrowException(updateUserDto.id);
 
     this.compareLevelsByRole(requester, user);
 
-    return this.usersRepo.update(updateUserDto.id, updateUserDto);
+    const updated = {
+      ...updateUserDto,
+      specialization: updateUserDto.specializationId
+        ? { id: updateUserDto.specializationId }
+        : null,
+    };
+    delete updated.specializationId;
+    await this.usersRepo.update(updateUserDto.id, updated);
+
+    return this.getById(updateUserDto.id);
   }
 
   async delete(id: string, requester: User) {
