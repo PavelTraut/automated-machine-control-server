@@ -43,7 +43,7 @@ export class UsersService {
 
   getAll(requester: User) {
     return this.usersRepo.find({
-      relations: ['departament', 'specialization'],
+      relations: ['departament', 'specialization', 'specialization.types'],
       where: { role: In(GetRolesUnder(requester.role)), isActive: true },
     });
   }
@@ -58,7 +58,7 @@ export class UsersService {
   getByIdWithCheck(id: string, requester: User) {
     return this.usersRepo.findOne({
       where: { id, role: In(GetRolesUnder(requester.role)) },
-      relations: ['departament', 'specialization'],
+      relations: ['departament', 'specialization', 'specialization.types'],
     });
   }
 
@@ -71,7 +71,7 @@ export class UsersService {
 
   async update(updateUserDto: UpdateUserDto, requester: User) {
     const realUser = await this.findByLogin(updateUserDto.login);
-    if (realUser) {
+    if (realUser && realUser.id != updateUserDto.id) {
       throw new BadRequestException(
         'Пользователь с таким логином уже существует',
       );

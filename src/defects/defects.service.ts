@@ -48,21 +48,28 @@ export class DefectsService {
         isResolved: { direction: 'ASC' },
         decisionDate: { direction: 'DESC' },
       },
-      relations: ['consumables', 'responsible', 'type', 'name'],
+      relations: ['consumables', 'responsible', 'type', 'name', 'machine'],
     });
   }
 
   getByUser(user: User) {
     return this.defectsRepo.find({
       where: { machine: { departament: { id: user.departament.id } } },
-      relations: ['consumables', 'responsible', 'type', 'name'],
+      relations: ['consumables', 'responsible', 'type', 'name', 'machine'],
     });
   }
 
   getById(id: string) {
     return this.defectsRepo.findOne({
       where: { id },
-      relations: ['consumables', 'responsible', 'type', 'machine', 'name'],
+      relations: [
+        'consumables',
+        'responsible',
+        'type',
+        'machine',
+        'name',
+        'machine',
+      ],
     });
   }
 

@@ -59,30 +59,26 @@ const actionsMap = {
 
 export default function getLogAction(url: string, method: string) {
   method = method.toLowerCase();
-  console.log(method);
+
   let id = null;
   const splitted = url.split('/');
-  console.log(splitted);
+
   if (url.startsWith('/')) {
     url = url.slice(1);
   }
   if (url[url.length - 1] === '/') {
     url = url.slice(0, -1);
   }
-  console.log(url);
 
   if (isUUID(splitted[splitted.length - 1])) {
     url = url.replace('/' + splitted[splitted.length - 1], '');
     id = splitted[splitted.length - 1];
   }
 
-  console.log(url);
-
   const action =
     actionsMap[url.split('/').find((path) => actionsMap[path]?.[method])]?.[
       method
     ] || actionsMap[url]?.[method];
-  console.log(action, actionsMap[url]);
   if (id) {
     return action + ' ' + id;
   }
