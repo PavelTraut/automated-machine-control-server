@@ -7,7 +7,6 @@ export class CryptoService {
   compare(hash: string, password: string) {
     return compare(password, hash);
   }
-
   encrypt(password: string) {
     return new Promise((resolve, reject) => {
       hash(password, this.saltRaunds, function (err, hash) {
