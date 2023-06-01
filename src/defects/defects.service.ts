@@ -21,18 +21,20 @@ export class DefectsService {
 
     const defect = this.defectsRepo.create({
       ...addDefectDto,
-      responsible: addDefectDto.responsible.map((id) => ({ id })),
-      consumables: addDefectDto.consumables.map((id) => ({ id })),
+      responsible: addDefectDto.responsible?.map((id) => ({ id })),
+      consumables: addDefectDto.consumables?.map((id) => ({ id })),
       machine: { id: addDefectDto.machineId },
       name: { id: defectName.id },
       type: { id: addDefectDto.type },
     });
 
-    await Promise.all(
-      addDefectDto.consumables.map(async (c) => {
-        await this.consumablesService.useConsumable(c);
-      }),
-    );
+    if (addDefectDto.consumables) {
+      await Promise.all(
+        addDefectDto.consumables?.map(async (c) => {
+          await this.consumablesService.useConsumable(c);
+        }),
+      );
+    }
 
     return this.defectsRepo.save(defect);
   }
@@ -75,18 +77,20 @@ export class DefectsService {
 
   async update(updateDefectDto: UpdateDefectDto) {
     const original = await this.getById(updateDefectDto.id);
-    await Promise.all(
-      original.consumables.map(async (c) => {
-        await this.consumablesService.unUseConsumable(c.id);
-      }),
-    );
+    if (updateDefectDto.consumables) {
+      await Promise.all(
+        original.consumables?.map(async (c) => {
+          await this.consumablesService.unUseConsumable(c.id);
+        }),
+      );
+    }
 
     await this.delete(original.id);
     return this.add({
       ...original,
       type: original.type.id,
-      consumables: original?.consumables.map((c) => c.id),
-      responsible: original?.responsible.map((c) => c.id),
+      consumables: original?.consumables?.map((c) => c.id),
+      responsible: original?.responsible?.map((c) => c.id),
       ...updateDefectDto,
       machineId: original.machine.id,
     });
@@ -100,7 +104,7 @@ export class DefectsService {
     const original = await this.getById(id);
 
     await Promise.all(
-      original.consumables.map(async (c) => {
+      original.consumables?.map(async (c) => {
         await this.consumablesService.unUseConsumable(c.id);
       }),
     );
