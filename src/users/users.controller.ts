@@ -19,7 +19,7 @@ import GetUser from '../decorators/get-user.decorator';
 import User from '../entitys/user.entity';
 
 @Controller('users')
-@UseGuards(RolesGuard)
+// @UseGuards(RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Post()
