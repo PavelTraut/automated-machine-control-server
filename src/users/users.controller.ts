@@ -23,7 +23,7 @@ import User from '../entitys/user.entity';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Post()
-  @Roles('admin')
+//  @Roles('admin')
   add(@Body() addUserDto: AddUserDto, @GetUser() user: User) {
     return this.usersService.add(addUserDto, user);
   }
