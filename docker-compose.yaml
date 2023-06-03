@@ -11,6 +11,8 @@ services:
     container_name: postgres-db-automated-machine-control
     volumes:
       - pg-data:/pg-data
+    logging:
+      driver: none
   nestjs:
     build: 
       context: .
