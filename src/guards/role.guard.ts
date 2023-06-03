@@ -17,12 +17,11 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const rolesLevels = roles.map((r) => getUserLevelByRole(r));
-
     const request: AppRequest = context.switchToHttp().getRequest();
-
     return (
-      !!(rolesLevels.includes(-1) && request.user?.role) ||
-      Math.max(...rolesLevels) >= getUserLevelByRole(request.user.role)
+      request.user &&
+      (!!(rolesLevels.includes(-1) && request.user?.role) ||
+        Math.max(...rolesLevels) >= getUserLevelByRole(request.user?.role))
     );
   }
 }
