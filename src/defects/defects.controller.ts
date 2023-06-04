@@ -30,7 +30,7 @@ export class DefectsController {
     @Query('departament') departament: string,
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
-    @Query('all') all: string,
+    @Query('byUser') byUser: string,
   ) {
     if (departament) {
       return this.defectsService.getByDepartament({
@@ -42,6 +42,10 @@ export class DefectsController {
 
     if (machineId) {
       return this.defectsService.getByMachine(machineId);
+    }
+
+    if (byUser == 'true') {
+      return this.defectsService.getByUser(user);
     }
 
     return this.defectsService.getAll({

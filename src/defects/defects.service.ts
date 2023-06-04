@@ -117,7 +117,7 @@ export class DefectsService {
 
   getByUser(user: User) {
     return this.defectsRepo.find({
-      where: { machine: { departament: { id: user.departament.id } } },
+      where: { responsible: { id: user.id }, isResolved: false },
       relations: [
         'consumables',
         'responsible',
