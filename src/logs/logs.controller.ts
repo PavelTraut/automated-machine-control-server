@@ -14,10 +14,12 @@ export class LogsController {
     @Query('limit') limit: number,
     @Query('page') page: number,
     @Query('count') count: boolean,
+    @Query('endDate') endDate: string,
+    @Query('startDate') startDate: string,
   ) {
     if (count) {
-      return this.logsService.count();
+      return this.logsService.count({ endDate, startDate });
     }
-    return this.logsService.getLogs({ limit, page });
+    return this.logsService.getLogs({ limit, page, endDate, startDate });
   }
 }
