@@ -17,7 +17,7 @@ export class UsersService {
   ) {}
 
   async add(addUserDto: AddUserDto, requester: User) {
-    //this.compareLevelsByRole(requester, { role: addUserDto.role } as User);
+    this.compareLevelsByRole(requester, { role: addUserDto.role } as User);
 
     const realUser = await this.findByLogin(addUserDto.login);
     if (realUser) {
