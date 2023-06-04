@@ -23,7 +23,7 @@ export class MachinesController {
   constructor(private readonly machinesService: MachinesService) {}
 
   @Post()
-  @Roles('admin')
+  @Roles('worker')
   add(@Body() createMachineDto: CreateMachineDto) {
     return this.machinesService.add(createMachineDto);
   }
@@ -43,7 +43,7 @@ export class MachinesController {
   }
 
   @Put()
-  @Roles('admin')
+  @Roles('worker')
   update(@Body() updateMachineDto: UpdateMachineDto) {
     return this.machinesService.update(updateMachineDto);
   }
