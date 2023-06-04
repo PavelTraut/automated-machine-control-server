@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Log from 'src/entitys/log.entity';
-import { Repository } from 'typeorm';
-import CreateLogDto from './dto/CreateLogDto';
+import { Between, FindOptionsWhere, Repository } from 'typeorm';
+import CreateLogDto from './dto/CreateLog.dto';
 import * as process from 'process';
+import GetLogsDto from './dto/GetLogs.dto';
+import { startOfDay, endOfDay, parse } from 'date-fns';
 
 @Injectable()
 export default class LogsService {
@@ -12,16 +14,38 @@ export default class LogsService {
     private logsRepository: Repository<Log>,
   ) {}
 
-  getLogs({ page = 0, limit = 10 }) {
+  getLogs({ page = 0, limit = 10, startDate, endDate }: GetLogsDto) {
+    const findArgs: FindOptionsWhere<Log> = {
+      creationDate:
+        (!!startDate &&
+          !!endDate &&
+          Between(
+            startOfDay(parse(startDate, "yyyy-MM-dd'T'HH:mm", new Date())),
+            endOfDay(parse(endDate, "yyyy-MM-dd'T'HH:mm", new Date())),
+          )) ||
+        undefined,
+    };
+
     return this.logsRepository.find({
       order: { creationDate: 'DESC' },
+      where: findArgs,
       take: limit,
       skip: limit * (page - 1),
     });
   }
 
-  count() {
-    return this.logsRepository.count();
+  count({ startDate, endDate }: { startDate: string; endDate: string }) {
+    const findArgs: FindOptionsWhere<Log> = {
+      creationDate:
+        (!!startDate &&
+          !!endDate &&
+          Between(
+            startOfDay(parse(startDate, "yyyy-MM-dd'T'HH:mm", new Date())),
+            endOfDay(parse(endDate, "yyyy-MM-dd'T'HH:mm", new Date())),
+          )) ||
+        undefined,
+    };
+    return this.logsRepository.count({ where: findArgs });
   }
 
   async createLog(log: CreateLogDto) {
