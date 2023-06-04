@@ -24,12 +24,30 @@ export class DefectsController {
 
   @Get()
   @Roles('all')
-  getAll(@GetUser() user: User, @Query('machine') machineId: string) {
+  getAll(
+    @GetUser() user: User,
+    @Query('machine') machineId: string,
+    @Query('departament') departament: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+    @Query('all') all: string,
+  ) {
+    if (departament) {
+      return this.defectsService.getByDepartament({
+        departament,
+        startDate,
+        endDate,
+      });
+    }
+
     if (machineId) {
       return this.defectsService.getByMachine(machineId);
     }
 
-    return this.defectsService.getAll();
+    return this.defectsService.getAll({
+      startDate,
+      endDate,
+    });
   }
 
   @Get(':id')
