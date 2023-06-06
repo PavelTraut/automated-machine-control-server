@@ -56,4 +56,12 @@ export class ConsumablesService {
   unUseConsumable(id: string) {
     return this.consumablesRepo.update(id, { isAvailable: true });
   }
+
+  useConsumables(ids: string[] = []) {
+    return Promise.all(ids.map((id) => this.useConsumable(id)));
+  }
+
+  unUseConsumables(ids: string[] = []) {
+    return Promise.all(ids.map((id) => this.unUseConsumable(id)));
+  }
 }
