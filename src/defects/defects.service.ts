@@ -29,13 +29,7 @@ export class DefectsService {
       type: { id: addDefectDto.type },
     });
 
-    if (addDefectDto.consumables) {
-      await Promise.all(
-        addDefectDto.consumables?.map(async (c) => {
-          await this.consumablesService.useConsumable(c);
-        }),
-      );
-    }
+    await this.consumablesService.useConsumables(addDefectDto.consumables);
 
     return this.defectsRepo.save(defect);
   }
@@ -76,6 +70,7 @@ export class DefectsService {
       },
       relations: [
         'consumables',
+        'consumables.type',
         'responsible',
         'type',
         'name',
@@ -106,6 +101,7 @@ export class DefectsService {
       },
       relations: [
         'consumables',
+        'consumables.type',
         'responsible',
         'type',
         'name',
@@ -120,6 +116,7 @@ export class DefectsService {
       where: { responsible: { id: user.id }, isResolved: false },
       relations: [
         'consumables',
+        'consumables.type',
         'responsible',
         'type',
         'name',
@@ -134,6 +131,7 @@ export class DefectsService {
       where: { id },
       relations: [
         'consumables',
+        'consumables.type',
         'responsible',
         'type',
         'machine',
@@ -149,13 +147,11 @@ export class DefectsService {
       updateDefectDto,
     );
     const original = await this.getById(updateDefectDto.id);
-    if (updateDefectDto.consumables) {
-      await Promise.all(
-        original.consumables?.map(async (c) => {
-          await this.consumablesService.unUseConsumable(c.id);
-        }),
-      );
-    }
+
+    await this.consumablesService.unUseConsumables(
+      original.consumables.map((c) => c.id),
+    );
+    await this.consumablesService.useConsumables(updateDefectDto.consumables);
 
     return this.defectsRepo.save({
       ...updateDefectDto,
