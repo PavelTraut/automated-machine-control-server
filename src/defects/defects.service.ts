@@ -51,7 +51,7 @@ export class DefectsService {
           undefined,
       },
       relations: [
-        'consumables',
+        'consumables.type',
         'responsible',
         'type',
         'name',
